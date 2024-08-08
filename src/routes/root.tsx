@@ -1,33 +1,25 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import Main from '../components/Main/Main';
 
 export default function Root() {
   return (
     <>
       <Helmet>
         <title>Catalog | Goods4you</title>
-        <meta name="description" content="Any products from famous brands with worldwide delivery" />
+        <meta
+          name="description"
+          content="Any products from famous brands with worldwide delivery"
+        />
         <meta name="robots" content="noindex" />
       </Helmet>
-      <header>
-        <h1>My E-commerce Site</h1>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/cart">Cart</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
+      <Header />
+      <Main>
         <Outlet />
-      </main>
-      <footer>
-        <p>&copy; 2024 My E-commerce Site</p>
-      </footer>
+      </Main>
+      <Footer />
     </>
   );
 }

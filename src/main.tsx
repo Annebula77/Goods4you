@@ -1,20 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import 'normalize.css'
-import './index.css'
 import ErrorPage from './routes/errorPage.tsx';
 import Root from './routes/root.tsx';
 import NoMatchPage from './routes/noMatch.tsx';
+import 'normalize.css';
+import './index.css';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       // {
-      //   index: true, 
+      //   index: true,
       //   element: <Home />,
       // },
       // {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       //   element: <Cart />,
       // },
       {
-        path: "*",
+        path: '*',
         element: <NoMatchPage />,
       },
     ],
@@ -36,5 +36,5 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);

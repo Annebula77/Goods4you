@@ -4,12 +4,9 @@ import NavigationLink from '../NavigationLink/NavigationLink';
 const Footer = () => {
   return (
     <footer className={styles.footerContainer}>
-      <Logo />
-      <nav className={styles.linkContainer}>
-        <NavigationLink
-          to={window.location.pathname === '/catalog' ? '#catalog' : '/catalog'}
-          label="Catalog"
-        />
+      <Logo aria-label="Footer Logo" />
+      <nav className={styles.linkContainer} aria-label="Footer Navigation">
+        <NavigationLink to="#catalog" label="Catalog" />
         <NavigationLink to="#faq" label="FAQ" />
       </nav>
     </footer>

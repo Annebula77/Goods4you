@@ -1,0 +1,19 @@
+.goodsContainer {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+  padding: 48px 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.56;
+}

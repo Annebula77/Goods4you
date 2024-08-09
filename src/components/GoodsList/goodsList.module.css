@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   width: 100%;
-  padding: 48px 130px;
+  padding: 48px 130px 48px;
   display: flex;
   flex-direction: column;
   gap: 48px;

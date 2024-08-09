@@ -20,7 +20,7 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   const isCurrentPage = location.pathname === to;
 
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    event: React.SyntheticEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     if (to.startsWith('#')) {
       const hash = to.slice(1);

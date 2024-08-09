@@ -2,6 +2,7 @@
   background-color: var(--button-red-default);
   color: var(--text-contrast);
   width: max-content;
+  height: max-content;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;

@@ -10,7 +10,7 @@ const SearchInput = () => {
         name="searchInput"
         placeholder="Search by title"
         aria-label="Search by title"
-        pattern="^[a-zA-Z0-9._-]+$"
+        pattern="[a-zA-Z0-9._\-\s]+"
         autoComplete="on"
         maxLength={60}
       />

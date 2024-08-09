@@ -30,3 +30,20 @@
   display: flex;
   flex-direction: column;
 }
+
+@container (max-width: 852px) {
+  .footerContainer {
+    padding: 0 90px;
+
+  }
+
+
+}
+
+@container (max-width: 584px) {
+  .footerContainer {
+    padding: 0 20px;
+
+  }
+
+}

@@ -8,3 +8,42 @@
   column-gap: 35px;
   row-gap: 26px;
 }
+
+
+@container (max-width: 1438px) {
+  .list {
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+}
+
+@container (max-width: 852px) {
+  .list {
+    grid-template-columns: repeat(2, 280px);
+    column-gap: 10px;
+  }
+
+}
+
+@container (max-width: 742px) {
+  .list {
+    grid-template-columns: repeat(1, 500px);
+    column-gap: 20px;
+  }
+
+}
+
+@container (max-width: 676px) {
+  .list {
+    grid-template-columns: repeat(1, 350px);
+    column-gap: unset;
+  }
+
+}
+
+@container (max-width: 584px) {
+  .list {
+    grid-template-columns: repeat(1, 280px);
+  }
+}

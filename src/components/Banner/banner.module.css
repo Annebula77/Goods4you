@@ -60,3 +60,113 @@
   font-weight: 600;
   line-height: 1.5;
 }
+
+@container (max-width: 1400px) {
+  .backgroundText {
+    bottom: 150px;
+    font-size: 150px;
+  }
+
+  .description {
+    width: 80%;
+  }
+
+  .text {
+    width: 60%;
+  }
+
+}
+
+@container (max-width: 1124px) {
+  .bannerContainer {
+    height: 400px;
+
+  }
+
+  .bannerBox {
+    padding: 70px 0;
+    gap: 40px;
+  }
+
+  .backgroundText {
+    bottom: 90px;
+    font-size: 80px;
+  }
+
+  .description {
+    font-size: 30px;
+    width: 70%;
+  }
+
+  .text {
+    width: 65%;
+    font-size: 20px;
+  }
+
+}
+
+@container (max-width: 852px) {
+  .bannerContainer {
+    padding: 0 90px;
+
+  }
+
+  .description {
+    width: 90%;
+  }
+
+  .text {
+    width: 85%;
+    font-size: 16px;
+  }
+
+}
+
+@container (max-width: 662px) {
+
+  .description {
+    font-size: 24px;
+    width: 100%;
+  }
+
+  .text {
+    font-weight: 400;
+    width: 95%;
+  }
+
+  .backgroundText {
+    bottom: 120px;
+    font-size: 40px;
+  }
+}
+
+
+
+@container (max-width: 584px) {
+  .bannerContainer {
+    padding: 0 20px;
+
+  }
+
+}
+
+@container (max-width: 364px) {
+  .bannerBox {
+    align-items: center;
+  }
+
+  .description {
+    font-size: 20px;
+
+  }
+
+  .text {
+    font-weight: 400;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .backgroundText {
+    bottom: 140px;
+  }
+}

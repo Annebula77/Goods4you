@@ -21,6 +21,7 @@
 .numberInput {
   box-sizing: border-box;
   width: 100%;
+  min-width: 50px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -40,4 +41,11 @@
   padding: 0;
   box-sizing: border-box;
   display: flex;
+}
+
+@container (max-width: 852px) {
+  .inputContainer {
+    gap: 10px;
+  }
+
 }

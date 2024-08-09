@@ -10,11 +10,9 @@ const GoodsList = () => {
       <ProductsGallery />
       <div className={styles.buttonContainer}>
         <Button
-
           onClick={() => {
             alert('will show some day:)');
           }}
-
         >
           Show more
         </Button>

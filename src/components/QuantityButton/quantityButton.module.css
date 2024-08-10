@@ -24,9 +24,11 @@
   min-width: 50px;
   margin: 0;
   padding: 0;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   color: var(--text-grey-dark);
   font-size: 14px;
   font-style: normal;
@@ -34,7 +36,14 @@
   line-height: 140%;
   border: none;
   outline: none;
+  transition: background-color var(--transition-duration) var(--transition-timing-function);
 }
+
+
+.hovered {
+  background-color: var(--background-grey-light);
+}
+
 
 .icon {
   margin: 0;

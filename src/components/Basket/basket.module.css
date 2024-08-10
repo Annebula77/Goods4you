@@ -1,0 +1,220 @@
+.basketContainer {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 48px 130px 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.56;
+}
+
+.listsWrapper {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+}
+
+.productContainer {
+  box-sizing: border-box;
+  border: 1px solid rgba(178, 181, 187, 1);
+  border-radius: var(--border-radius);
+  width: 66%;
+  margin: 0;
+  padding: 20px 40px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.pricingContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.totalCount {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-light);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.count {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.noDiscountText {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-light);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.noDiscountNumbers {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.total {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-light);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.totalPrice {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+
+.cartItem {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  text-decoration: none;
+  transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+
+.cartItem:hover {
+  background-color: var(--background-grey-light);
+}
+
+
+
+.countBox {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discountBox {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 0 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalBox {
+  box-sizing: border-box;
+  border-top: 1px solid rgba(178, 181, 187, 1);
+  margin: 0;
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@container (max-width: 1320px) {
+  .basketContainer {
+    padding: 48px 20px 92px;
+  }
+}
+
+@container (max-width: 1040px) {
+  .productContainer {
+    width: auto;
+
+  }
+}
+
+@container (max-width: 856px) {
+  .totalCount {
+    font-size: 16px;
+  }
+
+  .count {
+    font-size: 16px;
+  }
+
+  .noDiscountText {
+    font-size: 16px;
+  }
+
+  .noDiscountNumbers {
+    font-size: 16px;
+  }
+
+  .total {
+    font-size: 18px;
+  }
+
+  .totalPrice {
+    font-size: 18px;
+  }
+
+}
+
+@container (max-width: 640px) {
+  .listsWrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@container (max-width: 430px) {
+  .listsWrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

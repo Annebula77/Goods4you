@@ -1,8 +1,9 @@
 .mainContainer {
+  container-type: inline-size;
   box-sizing: border-box;
   width: 100%;
-  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }

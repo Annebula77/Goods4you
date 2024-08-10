@@ -4,12 +4,14 @@ interface CartIconProps {
   fill?: string;
   width?: number;
   height?: number;
+  className?: string;
 }
 
 const CartIcon: React.FC<CartIconProps> = ({
   fill = 'rgba(255, 255, 255, 1)',
   width = 20,
   height = 20,
+  className,
 }) => {
   return (
     <svg
@@ -18,6 +20,7 @@ const CartIcon: React.FC<CartIconProps> = ({
       height={height}
       viewBox="0 0 20 20"
       fill="none"
+      className={className}
     >
       <path
         d="M20 7.14286H16.6038L13.0359 0.34668C12.8589

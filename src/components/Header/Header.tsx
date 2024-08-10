@@ -8,16 +8,13 @@ import NavigationLink from '../NavigationLink/NavigationLink';
 const Header = () => {
   return (
     <header className={styles.headerContainer}>
-      <Logo />
-      <nav className={styles.linkContainer}>
-        <NavigationLink
-          to={window.location.pathname === '/catalog' ? '#catalog' : '/catalog'}
-          label="Catalog"
-        />
+      <Logo aria-label="Header Logo" />
+      <nav className={styles.linkContainer} aria-label="Main Navigation">
+        <NavigationLink to="#catalog" label="Catalog" />
         <NavigationLink to="#faq" label="FAQ" />
         <NavigationLink to="/cart" label="Cart">
           <div className={styles.cartWrapper}>
-            <CartIcon />
+            <CartIcon aria-label="Cart Icon" />
             <Counter quantity={1} />
           </div>
         </NavigationLink>

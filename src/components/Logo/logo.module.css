@@ -11,3 +11,10 @@
   font-weight: 700;
   line-height: 1.47;
 }
+
+@container (max-width: 584px) {
+  .logo {
+    font-size: 24px;
+
+  }
+}

@@ -6,6 +6,7 @@ import Root from './routes/root.tsx';
 import NoMatchPage from './routes/noMatch.tsx';
 import 'normalize.css';
 import './index.css';
+import Catalog from './components/Catalog/Catalog.tsx';
 
 const router = createBrowserRouter([
   {
@@ -13,10 +14,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   index: true,
-      //   element: <Home />,
-      // },
+      {
+        index: true,
+        element: <Catalog />,
+      },
       // {
       //   path: "products/:productId",
       //   element: <Product />,

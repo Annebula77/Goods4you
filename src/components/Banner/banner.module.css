@@ -1,0 +1,172 @@
+.bannerContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 130px;
+  width: 100%;
+  height: 500px;
+  background-color: var(--background-blue);
+  display: flex;
+}
+
+.bannerBox {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 115px 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--text-contrast);
+  gap: 30px;
+  z-index: 1;
+}
+
+.backgroundText {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: absolute;
+  left: 48px;
+  bottom: 78px;
+  color: rgba(255, 255, 255, 0.12);
+  text-align: center;
+  font-size: 200px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+  z-index: 0;
+}
+
+.description {
+  margin: 0;
+  padding: 0;
+  width: 46%;
+  align-self: stretch;
+  color: var(--text-contrast);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.39;
+}
+
+.text {
+  margin: 0;
+  padding: 0;
+  width: 30%;
+  color: var(--text-contrast);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@container (max-width: 1400px) {
+  .backgroundText {
+    bottom: 150px;
+    font-size: 150px;
+  }
+
+  .description {
+    width: 80%;
+  }
+
+  .text {
+    width: 60%;
+  }
+
+}
+
+@container (max-width: 1124px) {
+  .bannerContainer {
+    height: 400px;
+
+  }
+
+  .bannerBox {
+    padding: 70px 0;
+    gap: 40px;
+  }
+
+  .backgroundText {
+    bottom: 90px;
+    font-size: 80px;
+  }
+
+  .description {
+    font-size: 30px;
+    width: 70%;
+  }
+
+  .text {
+    width: 65%;
+    font-size: 20px;
+  }
+
+}
+
+@container (max-width: 852px) {
+  .bannerContainer {
+    padding: 0 90px;
+
+  }
+
+  .description {
+    width: 90%;
+  }
+
+  .text {
+    width: 85%;
+    font-size: 16px;
+  }
+
+}
+
+@container (max-width: 662px) {
+
+  .description {
+    font-size: 24px;
+    width: 100%;
+  }
+
+  .text {
+    font-weight: 400;
+    width: 95%;
+  }
+
+  .backgroundText {
+    bottom: 120px;
+    font-size: 40px;
+  }
+}
+
+
+
+@container (max-width: 584px) {
+  .bannerContainer {
+    padding: 0 20px;
+
+  }
+
+}
+
+@container (max-width: 364px) {
+  .bannerBox {
+    align-items: center;
+  }
+
+  .description {
+    font-size: 20px;
+
+  }
+
+  .text {
+    font-weight: 400;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .backgroundText {
+    bottom: 140px;
+  }
+}

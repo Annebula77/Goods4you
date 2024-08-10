@@ -7,6 +7,7 @@ import NoMatchPage from './routes/noMatch.tsx';
 import 'normalize.css';
 import './index.css';
 import Catalog from './components/Catalog/Catalog.tsx';
+import Basket from './components/Basket/Basket.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,10 @@ const router = createBrowserRouter([
       //   path: "products/:productId",
       //   element: <Product />,
       // },
-      // {
-      //   path: "cart",
-      //   element: <Cart />,
-      // },
+      {
+        path: 'cart',
+        element: <Basket />,
+      },
       {
         path: '*',
         element: <NoMatchPage />,

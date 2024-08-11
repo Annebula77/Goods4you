@@ -3,7 +3,7 @@ import styles from './productListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ProductListItemProps {
   id: number;
@@ -35,7 +35,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
 
   const handleDecrement = () => {
     setCurrentQuantity(prevQuantity =>
-      prevQuantity > 1 ? prevQuantity - 1 : 1
+      prevQuantity > 1 ? prevQuantity - 1 : 0
     );
   };
 
@@ -51,6 +51,20 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
     if (!onAddToCart) return;
     onAddToCart(id, 1);
   };
+
+  // NOTE: For testing purposes (delete later)
+  useEffect(() => {
+    if (id === 6) {
+      handleAddToCart();
+    }
+    // eslint-disable-next-line
+  }, [id]);
+
+  useEffect(() => {
+    if (currentQuantity === 0) {
+      setIsAddedToCart(false);
+    }
+  }, [currentQuantity]);
 
   return (
     <article className={styles.listItem}>

@@ -156,3 +156,35 @@
   font-weight: 600;
   padding-left: 8px;
 }
+
+.stockContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid rgb(196, 196, 196);
+  border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.inStock {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgb(241, 79, 79);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+.outOfStock {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-light);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.33;
+}

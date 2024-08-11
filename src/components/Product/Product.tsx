@@ -11,6 +11,22 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const hasDiscount = product.discountedPrice < product.price;
   const deliveryTime = monthConverter(product.deliveryTimeInDays);
   const warrantyTime = pluralConverter(product.warrantyPeriodInMonths, 'month');
+
+  // NOTE: if needed to be reused, should be moved to a separate component
+  const stockMessage = () => {
+    if (product.quantity === 0) {
+      return <p className={styles.outOfStock}>Out of Stock</p>;
+    }
+    if (product.quantity <= 15) {
+      return (
+        <p className={styles.inStock}>
+          In Stock - Only {product.quantity} left!
+        </p>
+      );
+    }
+    return <p className={styles.inStock}>In Stock - Enough in stock!</p>;
+  };
+
   return (
     <section className={styles.productContainer}>
       <figure className={styles.infoContainer}>
@@ -25,6 +41,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         </div>
         <figcaption className={styles.detailsContainer}>
           <h1 className={styles.title}>{product.name}</h1>
+          <div className={styles.stockContainer}>{stockMessage()}</div>
           <p className={styles.description}>{product.description}</p>
           <div
             className={styles.timesContainer}

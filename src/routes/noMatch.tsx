@@ -1,4 +1,5 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import NoMatchComponent from '../components/NoMatchComponent/NoMatchComponent';
 
 export default function NoMatchPage() {
   return (
@@ -6,8 +7,7 @@ export default function NoMatchPage() {
       <Helmet>
         <title>404 | Goods4you</title>
       </Helmet>
-      <h1>404</h1>
-      <p>Sorry, there is no such page.</p>
+      <NoMatchComponent />
     </>
   );
 }

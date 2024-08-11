@@ -24,6 +24,12 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   ) => {
     event.preventDefault();
 
+    // NOTE: cancel when profile page is active
+    if (to === '/profile') {
+      event.preventDefault();
+      return;
+    }
+
     if (!to.startsWith('#')) {
       navigate(to);
       return;

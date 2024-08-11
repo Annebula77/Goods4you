@@ -6,8 +6,8 @@ import Root from './routes/root.tsx';
 import NoMatchPage from './routes/noMatch.tsx';
 import 'normalize.css';
 import './index.css';
-import Catalog from './components/Catalog/Catalog.tsx';
-import Basket from './components/Basket/Basket.tsx';
+import CatalogPage from './routes/catalogPage.tsx';
+import CartPage from './routes/cartPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Catalog />,
+        element: <CatalogPage />,
       },
       // {
       //   path: "products/:productId",
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       // },
       {
         path: 'cart',
-        element: <Basket />,
+        element: <CartPage />,
       },
       {
         path: '*',

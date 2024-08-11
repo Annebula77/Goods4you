@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { type ProductType } from '../../types/productType';
 import { monthConverter } from '../../utils/functions/monthConverter';
 import { pluralConverter } from '../../utils/functions/pluralConverter';
 import Button from '../Button/Button';
+import PictureGallery from '../PictureGallery/PictureGallery';
+import Rating from '../Rating/Rating';
 import styles from './product.module.css';
 
 interface ProductProps {
@@ -11,6 +14,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const hasDiscount = product.discountedPrice < product.price;
   const deliveryTime = monthConverter(product.deliveryTimeInDays);
   const warrantyTime = pluralConverter(product.warrantyPeriodInMonths, 'month');
+
+  const [selectedImage, setSelectedImage] = useState(product.image);
+
+  const handleImageClick = (url: string) => {
+    setSelectedImage(url);
+  };
 
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {
@@ -33,14 +42,26 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         <div className={styles.gallery}>
           <img
             className={styles.picture}
-            src={product.image}
+            src={selectedImage}
             alt={product.name}
             loading="lazy"
             decoding="async"
           />
+          <PictureGallery
+            images={product.gallery}
+            name={product.name}
+            onImageClick={handleImageClick}
+          />
         </div>
         <figcaption className={styles.detailsContainer}>
           <h1 className={styles.title}>{product.name}</h1>
+          <div
+            className={styles.promotionContainer}
+            aria-label="rating and categories"
+          >
+            <Rating rating={product.rating} />
+            <p className={styles.categories}>{product.categories.join(', ')}</p>
+          </div>
           <div className={styles.stockContainer}>{stockMessage()}</div>
           <p className={styles.description}>{product.description}</p>
           <div

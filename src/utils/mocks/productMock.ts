@@ -13,6 +13,14 @@ const productMock = {
   discountedPrice: 7.17,
   discountPercentage: 14.5,
   status: true,
+  gallery: [
+    { id: 1, url: '/sneakers.png' },
+    { id: 2, url: '/sneakers.png' },
+    { id: 3, url: '/sneakers.png' },
+    { id: 4, url: '/sneakers.png' },
+    { id: 5, url: '/sneakers.png' },
+    { id: 6, url: '/sneakers.png' },
+  ],
 };
 
 export default productMock;

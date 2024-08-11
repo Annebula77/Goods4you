@@ -12,4 +12,10 @@ export type ProductType = {
   discountedPrice: number;
   discountPercentage: number;
   status: boolean;
+  gallery: GalleryItem[];
+};
+
+export type GalleryItem = {
+  id: number;
+  url: string;
 };

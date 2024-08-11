@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-
 import Basket from '../components/Basket/Basket';
 
 export default function CartPage() {

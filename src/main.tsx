@@ -8,6 +8,7 @@ import 'normalize.css';
 import './index.css';
 import CatalogPage from './routes/catalogPage.tsx';
 import CartPage from './routes/cartPage.tsx';
+import ProductPage from './routes/productPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,10 +20,10 @@ const router = createBrowserRouter([
         index: true,
         element: <CatalogPage />,
       },
-      // {
-      //   path: "products/:productId",
-      //   element: <Product />,
-      // },
+      {
+        path: 'product/:productId',
+        element: <ProductPage />,
+      },
       {
         path: 'cart',
         element: <CartPage />,

@@ -34,7 +34,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
       <li className={styles.inputItem}>
         <Button
           onClick={onDecrement}
-          disabled={decrementDisabled || quantity <= 1}
+          disabled={decrementDisabled || quantity <= 0}
           padding="23.5px 16px"
         >
           <MinusIcon className={styles.icon} />

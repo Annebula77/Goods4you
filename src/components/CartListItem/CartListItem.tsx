@@ -3,7 +3,7 @@ import styles from './cartListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteButton from '../DeleteButton/DeleteButton';
 
 interface CartListItemProps {
@@ -62,6 +62,13 @@ const CartListItem: React.FC<CartListItemProps> = ({
       onRemoveFromCart(id);
     }
   };
+
+  // NOTE: For testing purposes (delete later)
+  useEffect(() => {
+    if (id === 4) {
+      setIsDeletedFromCart(true);
+    }
+  }, [id]);
 
   return (
     <article className={styles.listItem}>

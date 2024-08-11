@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
 
 export default function Root() {
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <title>Catalog | Goods4you</title>
         <meta
@@ -20,6 +20,6 @@ export default function Root() {
         <Outlet />
       </Main>
       <Footer />
-    </>
+    </HelmetProvider>
   );
 }

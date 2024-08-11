@@ -1,4 +1,5 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import ErrorComponent from '../components/ErrorComponent/ErrorComponent';
 
 export default function ErrorPage() {
   return (
@@ -6,8 +7,7 @@ export default function ErrorPage() {
       <Helmet>
         <title>Error | Goods4you</title>
       </Helmet>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+      <ErrorComponent />
     </>
   );
 }

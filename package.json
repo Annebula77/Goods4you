@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
+    "@types/react-redux": "^7.1.33",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",

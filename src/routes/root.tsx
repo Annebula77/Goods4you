@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
@@ -20,6 +22,18 @@ export default function Root() {
         <Outlet />
       </Main>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </HelmetProvider>
   );
 }

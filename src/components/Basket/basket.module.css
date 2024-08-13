@@ -165,6 +165,17 @@
   align-items: center;
 }
 
+.emptyText {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: var(--text-grey-light);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 @container (max-width: 1320px) {
   .basketContainer {
     padding: 48px 20px 92px;

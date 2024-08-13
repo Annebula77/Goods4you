@@ -3,14 +3,16 @@ import styles from './cartListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DeleteButton from '../DeleteButton/DeleteButton';
+import { discountedPrice } from '../../utils/functions/discpuntedPrice';
 
 interface CartListItemProps {
   id: number;
   imageUrl: string;
   name: string;
   price: number;
+  discountPercentage?: number;
   quantity: number;
   onAddToCart?: (id: number, quantity: number) => void;
   onRemoveFromCart?: (id: number) => void;
@@ -21,6 +23,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
   imageUrl,
   name,
   price,
+  discountPercentage,
   quantity,
   onAddToCart,
   onRemoveFromCart,
@@ -63,13 +66,6 @@ const CartListItem: React.FC<CartListItemProps> = ({
     }
   };
 
-  // NOTE: For testing purposes (delete later)
-  useEffect(() => {
-    if (id === 4) {
-      setIsDeletedFromCart(true);
-    }
-  }, [id]);
-
   return (
     <article className={styles.listItem}>
       <figure className={styles.imageWrapper}>
@@ -91,7 +87,12 @@ const CartListItem: React.FC<CartListItemProps> = ({
             >
               {name}
             </h3>
-            <p className={styles.price}>${price}</p>
+            <p className={styles.price}>
+              $
+              {discountPercentage !== undefined
+                ? discountedPrice(price, discountPercentage)
+                : price}
+            </p>
           </Link>
         </figcaption>
       </figure>

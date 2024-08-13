@@ -5,13 +5,21 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  width: 12px;
-  height: 12px;
   border-radius: 50%;
   background-color: var(--button-red-default);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.small {
+  width: 12px;
+  height: 12px;
+}
+
+.large {
+  width: 16px;
+  height: 16px;
 }
 
 .text {

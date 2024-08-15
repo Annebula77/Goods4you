@@ -2,21 +2,24 @@
 import Button from '../Button/Button';
 import ProductsGallery from '../ProductsGallery/ProductsGallery';
 
-import { debounce } from 'lodash';
+import { debounce, differenceBy } from 'lodash';
 import SearchInput from '../SearchInput/SearchInput';
 import styles from './goodsList.module.css';
 import { useGetProductsQuery } from '../../store/slices/productsApiSlice';
-import { useState } from 'react';
-import { type ProductWithCartInfo } from '../../types/productType';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addToCart, decrementQuantity, incrementQuantity, updateQuantity } from '../../store/slices/cartSlice';
+import {
+  setLoadedProducts,
+  setSkip,
+  setSearchTerm,
+  setLimit,
+} from '../../store/slices/loadedProductsSlice';
 
 const GoodsList = () => {
 
   const dispatch = useAppDispatch();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(12);
+  const { loadedProducts, skip, searchTerm, limit } = useAppSelector(state => state.loadedProducts);
 
   const cart = useAppSelector(state => state.cart.cart);
 
@@ -26,32 +29,50 @@ const GoodsList = () => {
     skip,
   });
 
-  const debouncedSearch = debounce(term => {
-    setSkip(0);
-    setSearchTerm(term);
-    setLimit(12);
+
+
+  useEffect(() => {
+    if (data) {
+      const newProducts = data.products.map(product => {
+        const cartProduct = cart?.products.find(p => p.id === product.id);
+
+        return {
+          id: product.id,
+          title: product.title,
+          thumbnail: product.thumbnail,
+          price: product.price,
+          discountPercentage: product.discountPercentage,
+          stock: product.stock,
+          quantityInCart: cartProduct ? cartProduct.quantity : 0,
+          currentQuantity: cartProduct ? cartProduct.quantity : 0,
+          isAddedToCart: Boolean(cartProduct),
+        };
+      });
+
+      const uniqueNewProducts = differenceBy(newProducts, loadedProducts, 'id');
+
+      if (uniqueNewProducts.length > 0) {
+        dispatch(setLoadedProducts(skip === 0 ? newProducts : [...loadedProducts, ...uniqueNewProducts]));
+      }
+      dispatch(setSkip(skip));
+      dispatch(setLimit(limit));
+
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, skip, limit]);
+
+  const debouncedSearch = debounce((term: string) => {
+    dispatch(setSearchTerm(term));
+    dispatch(setSkip(0));
+    dispatch(setLimit(12));
+    dispatch(setLoadedProducts([]));
   }, 500);
 
-  const productsData: ProductWithCartInfo[] | undefined = data
-    ? data.products.map(product => {
-      const cartProduct = cart?.products.find(p => p.id === product.id);
 
-      return {
-        id: product.id,
-        title: product.title,
-        thumbnail: product.thumbnail,
-        price: product.price,
-        discountPercentage: product.discountPercentage,
-        stock: product.stock,
-        quantityInCart: cartProduct ? cartProduct.quantity : 0,
-        currentQuantity: cartProduct ? cartProduct.quantity : 0,
-        isAddedToCart: Boolean(cartProduct),
-      };
-    })
-    : undefined;
+
 
   const handleAddToCart = (id: number) => {
-    const product = productsData?.find(p => p.id === id);
+    const product = loadedProducts.find(p => p.id === id);
     if (product) {
       dispatch(
         addToCart({
@@ -64,6 +85,7 @@ const GoodsList = () => {
       );
     }
   };
+
   const handleIncrement = (id: number) => {
     dispatch(incrementQuantity(id));
   };
@@ -79,11 +101,9 @@ const GoodsList = () => {
   };
 
 
-  console.log(productsData);
-
   const handleLoadMore = () => {
     if (data && skip + limit < data.total) {
-      setSkip(prevSkip => prevSkip + limit);
+      dispatch(setSkip(skip + limit));
     }
   };
 
@@ -93,15 +113,21 @@ const GoodsList = () => {
       <SearchInput onChange={e => debouncedSearch(e.target.value)} />
       {isLoading && <div>Loading...</div>}
       {error && <div>Error loading products</div>}
-      {productsData?.length && <ProductsGallery
-        products={productsData}
-        onAddToCart={handleAddToCart}
-        onIncrement={handleIncrement}
-        onDecrement={handleDecrement}
-        onInputChange={handleInputChange} />}
-      <div className={styles.buttonContainer}>
-        <Button onClick={handleLoadMore}>Show more</Button>
-      </div>
+      {searchTerm && data?.products.length === 0 && <div>No products found</div>}
+      {loadedProducts.length > 0 && (
+        <ProductsGallery
+          products={loadedProducts}
+          onAddToCart={handleAddToCart}
+          onIncrement={handleIncrement}
+          onDecrement={handleDecrement}
+          onInputChange={handleInputChange}
+        />
+      )}
+      {data && skip + limit < data.total && (
+        <div className={styles.buttonContainer}>
+          <Button onClick={handleLoadMore}>Show more</Button>
+        </div>
+      )}
     </section>
   );
 };

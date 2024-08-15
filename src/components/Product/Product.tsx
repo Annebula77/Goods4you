@@ -49,7 +49,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             loading="lazy"
             decoding="async"
           />
-          {product.images.length >= 1 && (
+          {product.images.length > 1 && (
             <PictureGallery
               images={product.images}
               name={product.title}

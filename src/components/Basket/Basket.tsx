@@ -37,11 +37,15 @@ const Basket = () => {
             </dl>
             <dl className={styles.discountBox}>
               <dt className={styles.noDiscountText}>Price without discount</dt>
-              <dd className={styles.noDiscountNumbers}>${cart?.total}</dd>
+              <dd className={styles.noDiscountNumbers}>
+                ${+cart?.total.toFixed(2)}
+              </dd>
             </dl>
             <dl className={styles.totalBox}>
               <dt className={styles.total}>Total price</dt>
-              <dd className={styles.totalPrice}>${cart?.discountedTotal}</dd>
+              <dd className={styles.totalPrice}>
+                ${+cart?.discountedTotal.toFixed(2)}
+              </dd>
             </dl>
           </div>
         </div>

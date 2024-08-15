@@ -3,7 +3,6 @@ import styles from './productListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useEffect, useState } from 'react';
 import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 interface ProductListItemProps {
@@ -13,7 +12,12 @@ interface ProductListItemProps {
   price: number;
   stock: number;
   discountPercentage?: number;
-  onAddToCart?: (id: number, quantity: number) => void;
+  currentQuantity: number;
+  isAddedToCart: boolean;
+  onAddToCart: (id: number) => void;
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onInputChange: (id: number, value: number) => void;
 }
 const ProductListItem: React.FC<ProductListItemProps> = ({
   id,
@@ -22,44 +26,21 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
   price,
   stock,
   discountPercentage,
+  currentQuantity,
+  isAddedToCart,
   onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(stock);
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
-  const handleIncrement = () => {
-    setCurrentQuantity(prevStock => {
-      if (prevStock < stock) {
-        return prevStock + 1;
-      }
-      return prevStock;
-    });
-  };
-
-  const handleDecrement = () => {
-    setCurrentQuantity(prevStock => (prevStock > 1 ? prevStock - 1 : 0));
-  };
-
-  const handleInputChange = (value: number) => {
-    if (value > 0) {
-      setCurrentQuantity(value);
-    }
-  };
-
-  const handleAddToCart = () => {
-    setIsAddedToCart(true);
-    setCurrentQuantity(1);
-    if (!onAddToCart) return;
-    onAddToCart(id, 1);
-  };
-
   const priceWithDiscount = discountedPrice(price, discountPercentage ?? 0);
 
-  useEffect(() => {
-    if (currentQuantity === 0) {
-      setIsAddedToCart(false);
+  const handleIncrement = () => {
+    if (currentQuantity >= stock) {
+      return;
     }
-  }, [currentQuantity]);
+    onIncrement(id);
+  };
 
   return (
     <article className={styles.listItem}>
@@ -75,7 +56,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           <Link
             to={`/product/${id}`}
             className={styles.showDetailsLink}
-            aria-label={`Show details for ${name}`}
+            aria-label={`Show details for ${title}`}
           >
             <span className={styles.showDetailsText}>Show details</span>
           </Link>
@@ -95,11 +76,11 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           <QuantityButton
             quantity={currentQuantity}
             onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onInputChange={handleInputChange}
+            onDecrement={() => onDecrement(id)}
+            onInputChange={value => onInputChange(id, value)}
           />
         ) : (
-          <Button padding="16px 16px" onClick={handleAddToCart}>
+          <Button padding="16px 16px" onClick={() => onAddToCart(id)}>
             <CartIcon
               width={18}
               height={18}

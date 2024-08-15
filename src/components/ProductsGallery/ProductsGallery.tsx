@@ -1,11 +1,21 @@
 import styles from './productsGallery.module.css';
 import ProductListItem from '../ProductListItem/ProductListItem';
-import { type ListProductType } from '../../types/productType';
+import { type ProductWithCartInfo } from '../../types/productType';
 
 interface ProductsGalleryProps {
-  products: ListProductType[] | undefined;
+  products: ProductWithCartInfo[] | undefined;
+  onAddToCart: (id: number) => void;
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onInputChange: (id: number, value: number) => void;
 }
-const ProductsGallery: React.FC<ProductsGalleryProps> = ({ products }) => {
+const ProductsGallery: React.FC<ProductsGalleryProps> = ({
+  products,
+  onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
+}) => {
   return (
     <ul className={styles.list}>
       {products?.map(product => (
@@ -17,6 +27,12 @@ const ProductsGallery: React.FC<ProductsGalleryProps> = ({ products }) => {
             price={product.price}
             discountPercentage={product.discountPercentage}
             stock={product.stock}
+            currentQuantity={product.currentQuantity}
+            isAddedToCart={product.isAddedToCart}
+            onAddToCart={() => onAddToCart(product.id)}
+            onIncrement={() => onIncrement(product.id)}
+            onDecrement={() => onDecrement(product.id)}
+            onInputChange={value => onInputChange(product.id, value)}
           />
         </li>
       ))}

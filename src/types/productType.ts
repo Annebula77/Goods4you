@@ -24,3 +24,8 @@ export type ListProductType = Pick<
   FullProductModel,
   'id' | 'title' | 'thumbnail' | 'price' | 'discountPercentage' | 'stock'
 >;
+
+export interface ProductWithCartInfo extends ListProductType {
+  currentQuantity: number;
+  isAddedToCart: boolean;
+}

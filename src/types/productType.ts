@@ -19,3 +19,8 @@ export type ProductType = Pick<
 export interface ProductProps {
   product: ProductType;
 }
+
+export type ListProductType = Pick<
+  FullProductModel,
+  'id' | 'title' | 'thumbnail' | 'price' | 'discountPercentage' | 'stock'
+>;

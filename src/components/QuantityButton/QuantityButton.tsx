@@ -11,6 +11,7 @@ interface QuantityButtonProps {
   decrementDisabled?: boolean;
   incrementDisabled?: boolean;
   hovered?: boolean;
+  background?: boolean;
 }
 const QuantityButton: React.FC<QuantityButtonProps> = ({
   quantity,
@@ -20,6 +21,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
   decrementDisabled,
   incrementDisabled,
   hovered,
+  background,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -46,7 +48,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           value={`${quantity} ${quantity === 1 ? 'item' : 'items'}`}
           onChange={handleChange}
           aria-label="quantity"
-          className={`${styles.numberInput} ${hovered ? styles.hovered : ''}`}
+          className={`${styles.numberInput} ${hovered || background ? styles.hovered : ''}`}
           readOnly
         />
       </li>

@@ -4,39 +4,40 @@ import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
 import { useEffect, useState } from 'react';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 interface ProductListItemProps {
   id: number;
-  imageUrl: string;
-  name: string;
+  thumbnail: string;
+  title: string;
   price: number;
-  quantity: number;
+  stock: number;
+  discountPercentage?: number;
   onAddToCart?: (id: number, quantity: number) => void;
 }
 const ProductListItem: React.FC<ProductListItemProps> = ({
   id,
-  imageUrl,
-  name,
+  thumbnail,
+  title,
   price,
-  quantity,
+  stock,
+  discountPercentage,
   onAddToCart,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(quantity);
+  const [currentQuantity, setCurrentQuantity] = useState(stock);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const handleIncrement = () => {
-    setCurrentQuantity(prevQuantity => {
-      if (prevQuantity < quantity) {
-        return prevQuantity + 1;
+    setCurrentQuantity(prevStock => {
+      if (prevStock < stock) {
+        return prevStock + 1;
       }
-      return prevQuantity;
+      return prevStock;
     });
   };
 
   const handleDecrement = () => {
-    setCurrentQuantity(prevQuantity =>
-      prevQuantity > 1 ? prevQuantity - 1 : 0
-    );
+    setCurrentQuantity(prevStock => (prevStock > 1 ? prevStock - 1 : 0));
   };
 
   const handleInputChange = (value: number) => {
@@ -52,13 +53,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
     onAddToCart(id, 1);
   };
 
-  // NOTE: For testing purposes (delete later)
-  useEffect(() => {
-    if (id === 6) {
-      handleAddToCart();
-    }
-    // eslint-disable-next-line
-  }, [id]);
+  const priceWithDiscount = discountedPrice(price, discountPercentage ?? 0);
 
   useEffect(() => {
     if (currentQuantity === 0) {
@@ -71,8 +66,8 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
       <div className={styles.imageWrapper}>
         <img
           className={styles.image}
-          src={imageUrl}
-          alt={name}
+          src={thumbnail}
+          alt={title}
           loading="lazy"
           decoding="async"
         />
@@ -91,10 +86,10 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
         <Link
           to={`/product/${id}`}
           className={styles.link}
-          aria-label={`Product ${name}`}
+          aria-label={`Product ${title}`}
         >
-          <h3 className={styles.title}>{name}</h3>
-          <p className={styles.price}>${price}</p>
+          <h3 className={styles.title}>{title}</h3>
+          <p className={styles.price}>${priceWithDiscount}</p>
         </Link>
         {isAddedToCart ? (
           <QuantityButton

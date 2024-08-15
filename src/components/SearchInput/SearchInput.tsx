@@ -1,6 +1,8 @@
 import styles from './searchInput.module.css';
-
-const SearchInput = () => {
+interface SearchInputProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
   return (
     <div>
       <input
@@ -13,6 +15,7 @@ const SearchInput = () => {
         pattern="[a-zA-Z0-9._\-\s]+"
         autoComplete="on"
         maxLength={60}
+        onChange={onChange}
       />
     </div>
   );

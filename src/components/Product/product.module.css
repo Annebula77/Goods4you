@@ -107,6 +107,7 @@
 
 .priceContainer {
   box-sizing: border-box;
+  width: 68%;
   margin: 0;
   padding: 0;
   display: flex;

@@ -20,11 +20,6 @@ export const productsApiSlice = createApi({
         url: `/products/search`,
         params: { q, limit, skip },
       }),
-      transformResponse: (response: {
-        data: { products: FullProductModel[]; total: number };
-      }) => {
-        return response.data;
-      },
       providesTags: ['Products'],
     }),
     getProductById: builder.query<FullProductModel, number>({

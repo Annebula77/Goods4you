@@ -1,18 +1,22 @@
 import styles from './productsGallery.module.css';
 import ProductListItem from '../ProductListItem/ProductListItem';
-import productListMock from '../../utils/mocks/productListMock';
+import { type ListProductType } from '../../types/productType';
 
-const ProductsGallery = () => {
+interface ProductsGalleryProps {
+  products: ListProductType[] | undefined;
+}
+const ProductsGallery: React.FC<ProductsGalleryProps> = ({ products }) => {
   return (
     <ul className={styles.list}>
-      {productListMock.map(product => (
+      {products?.map(product => (
         <li key={product.id}>
           <ProductListItem
             id={product.id}
-            imageUrl={product.image}
-            name={product.name}
+            thumbnail={product.thumbnail}
+            title={product.title}
             price={product.price}
-            quantity={product.quantity}
+            discountPercentage={product.discountPercentage}
+            stock={product.stock}
           />
         </li>
       ))}

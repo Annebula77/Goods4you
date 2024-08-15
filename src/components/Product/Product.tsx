@@ -1,23 +1,29 @@
-import { useState } from 'react';
 import Button from '../Button/Button';
 import PictureGallery from '../PictureGallery/PictureGallery';
 import Rating from '../Rating/Rating';
 import styles from './product.module.css';
 import { discountedPrice } from '../../utils/functions/discountedPrice';
 import { type ProductProps } from '../../types/productType';
+import QuantityButton from '../QuantityButton/QuantityButton';
+import useProduct from './useProduct';
 
 const Product: React.FC<ProductProps> = ({ product }) => {
+  const {
+    selectedImage,
+    currentQuantity,
+    isAddedToCart,
+    handleImageClick,
+    handleIncrement,
+    handleDecrement,
+    handleInputChange,
+    handleAddToCart,
+  } = useProduct({ product });
+
   const priceWithDiscount = discountedPrice(
     product.price ?? 0,
     product.discountPercentage ?? 0
   );
   const hasDiscount = priceWithDiscount < product.price;
-
-  const [selectedImage, setSelectedImage] = useState(product.thumbnail);
-
-  const handleImageClick = (url: string) => {
-    setSelectedImage(url);
-  };
 
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {
@@ -90,7 +96,17 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 </span>
               </p>
             </div>
-            <Button>Add to cart</Button>
+            {isAddedToCart ? (
+              <QuantityButton
+                quantity={currentQuantity}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+                onInputChange={handleInputChange}
+                background
+              />
+            ) : (
+              <Button onClick={handleAddToCart}>Add to cart</Button>
+            )}
           </article>
         </figcaption>
       </figure>

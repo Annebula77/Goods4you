@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { GalleryItem } from '../../types/productType';
 import styles from './pictureGallery.module.css';
 
 interface PictureGalleryProps {
-  images: GalleryItem[];
+  images: string[];
   name: string;
   width?: number;
   height?: number;
@@ -33,11 +32,11 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({
           <img
             className={`${styles.pictureGalleryImage} 
             ${activeIndex === index ? styles.active : ''}`}
-            src={image.url}
+            src={image}
             alt={`${name} ${index + 1}`}
             loading="lazy"
             decoding="async"
-            onClick={() => handleImageClick(image.url, index)}
+            onClick={() => handleImageClick(image, index)}
           />
         </li>
       ))}

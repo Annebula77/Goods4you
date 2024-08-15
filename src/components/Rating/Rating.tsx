@@ -12,9 +12,11 @@ const Rating: React.FC<StarRatingProps> = ({
   maxRating = 5,
   starSize = 17,
 }) => {
+  const roundedRating = Math.round(rating);
+
   const stars = Array.from({ length: maxRating }, (_, index) => {
     const fillColor =
-      index < rating ? 'rgba(241, 79, 79, 1)' : 'rgba(213, 213, 213, 1)';
+      index < roundedRating ? 'rgba(241, 79, 79, 1)' : 'rgba(213, 213, 213, 1)';
     return (
       <StarIcon
         key={index}

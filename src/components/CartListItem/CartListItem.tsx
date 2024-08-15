@@ -5,7 +5,7 @@ import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
 import { useState } from 'react';
 import DeleteButton from '../DeleteButton/DeleteButton';
-import { discountedPrice } from '../../utils/functions/discpuntedPrice';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 interface CartListItemProps {
   id: number;

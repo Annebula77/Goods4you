@@ -6,6 +6,7 @@ import Product from '../components/Product/Product';
 import { type ProductType } from '../types/productType';
 import { useGetProductByIdQuery } from '../store/slices/productsApiSlice';
 import NoMatchPage from './noMatch';
+import Loader from '../components/Loader/Loader';
 
 export default function ProductPage() {
   const { productId } = useParams();
@@ -23,7 +24,7 @@ export default function ProductPage() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const productData: ProductType | undefined = data

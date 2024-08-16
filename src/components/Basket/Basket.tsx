@@ -9,10 +9,12 @@ import {
 } from '../../store/slices/cartSlice';
 import styles from './basket.module.css';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import Loader from '../Loader/Loader';
+import ErrorComponent from '../ErrorComponent/ErrorComponent';
 const Basket = () => {
   const dispatch = useAppDispatch();
 
-  const cart = useAppSelector(state => state.cart.cart);
+  const { cart, loading, error } = useAppSelector(state => state.cart);
 
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
@@ -31,6 +33,14 @@ const Basket = () => {
   const handleRemoveFromCart = (id: number) => {
     dispatch(deleteProduct(id));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <ErrorComponent />;
+  }
 
   return (
     <section className={styles.basketContainer}>

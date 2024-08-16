@@ -1,5 +1,8 @@
 /* eslint-disable prettier/prettier */
 import Button from '../Button/Button';
+import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import InvalidEntry from '../InvalidEntry/InvalidEntry';
+import Loader from '../Loader/Loader';
 import ProductsGallery from '../ProductsGallery/ProductsGallery';
 import SearchInput from '../SearchInput/SearchInput';
 import styles from './goodsList.module.css';
@@ -25,9 +28,9 @@ const GoodsList = () => {
     <section id="catalog" className={styles.goodsContainer}>
       <h2 className={styles.title}>Catalog</h2>
       <SearchInput onChange={e => debouncedSearch(e.target.value)} />
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Error loading products</div>}
-      {searchTerm && loadedProducts.length === 0 && <div>No products found</div>}
+      {isLoading && <Loader />}
+      {error && <ErrorComponent />}
+      {searchTerm && loadedProducts.length === 0 && <InvalidEntry />}
       {loadedProducts.length > 0 && (
         <ProductsGallery
           products={loadedProducts}

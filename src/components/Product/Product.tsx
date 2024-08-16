@@ -25,6 +25,8 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   );
   const hasDiscount = priceWithDiscount < product.price;
 
+  const hasQuantity = currentQuantity === 0;
+
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {
     if (product.stock === 0) {
@@ -96,7 +98,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 </span>
               </p>
             </div>
-            {isAddedToCart ? (
+            {isAddedToCart && !hasQuantity ? (
               <QuantityButton
                 quantity={currentQuantity}
                 onIncrement={handleIncrement}

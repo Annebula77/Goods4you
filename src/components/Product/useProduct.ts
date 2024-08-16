@@ -28,9 +28,11 @@ const useProduct = ({ product }: ProductProps) => {
   };
 
   const handleDecrement = () => {
-    if (currentQuantity > 1) {
-      dispatch(decrementQuantity(product.id));
+    if (currentQuantity === 0) {
+      return;
     }
+
+    dispatch(decrementQuantity(product.id));
   };
 
   const handleInputChange = (value: number) => {

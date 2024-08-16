@@ -99,8 +99,9 @@ export const cartSlice = createSlice({
         product.price * (1 - product.discountPercentage / 100);
 
       if (product.quantity === 0) {
-        state.cart!.products = state.cart!.products.filter(
-          p => p.id !== productId
+        state.cart!.total = state.cart!.products.reduce(
+          (acc, product) => acc + product.total,
+          0
         );
       }
 
@@ -119,6 +120,32 @@ export const cartSlice = createSlice({
       if (product) {
         product.quantity = quantity;
       }
+    },
+    deleteProduct: (state, action: PayloadAction<number>) => {
+      const productId = action.payload;
+      const product = state.cart?.products.find(p => p.id === productId);
+
+      if (!product) {
+        return;
+      }
+
+      product.quantity = 0;
+      product.total = 0;
+      product.discountedTotal = 0;
+
+      state.cart!.total = state.cart!.products.reduce(
+        (acc, product) => acc + product.total,
+        0
+      );
+      state.cart!.discountedTotal = state.cart!.products.reduce(
+        (acc, product) => acc + product.discountedTotal,
+        0
+      );
+      state.cart!.totalQuantity = state.cart!.products.reduce(
+        (acc, product) => acc + product.quantity,
+        0
+      );
+      state.cart!.totalProducts = state.cart!.products.length;
     },
   },
   extraReducers: builder => {
@@ -142,6 +169,7 @@ export const {
   incrementQuantity,
   decrementQuantity,
   updateQuantity,
+  deleteProduct,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

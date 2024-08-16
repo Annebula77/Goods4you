@@ -11,6 +11,8 @@ const ProductSchema = z.object({
   thumbnail: z.string().url(),
 });
 
+export type CarProductModel = z.infer<typeof ProductSchema>;
+
 export const CartSchema = z.object({
   id: z.number(),
   products: z.array(ProductSchema),

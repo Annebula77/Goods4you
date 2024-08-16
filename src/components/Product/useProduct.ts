@@ -7,6 +7,7 @@ import {
   incrementQuantity,
   updateQuantity,
 } from '../../store/slices/cartSlice';
+import { toast } from 'react-toastify';
 
 const useProduct = ({ product }: ProductProps) => {
   const dispatch = useAppDispatch();
@@ -22,9 +23,11 @@ const useProduct = ({ product }: ProductProps) => {
   };
 
   const handleIncrement = () => {
-    if (currentQuantity < product.stock) {
-      dispatch(incrementQuantity(product.id));
+    if (currentQuantity === product.stock) {
+      toast.error('You have reached the maximum quantity');
+      return;
     }
+    dispatch(incrementQuantity(product.id));
   };
 
   const handleDecrement = () => {

@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
 import { discountedPrice } from '../../utils/functions/discountedPrice';
+import { toast } from 'react-toastify';
 
 interface ProductListItemProps {
   id: number;
@@ -37,6 +38,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
 
   const handleIncrement = () => {
     if (currentQuantity >= stock) {
+      toast.info('You have reached the maximum quantity');
       return;
     }
     onIncrement(id);

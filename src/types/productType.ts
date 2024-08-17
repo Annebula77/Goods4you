@@ -1,21 +1,31 @@
-export type ProductType = {
-  id: number;
-  name: string;
-  description: string;
-  quantity: number;
-  categories: string[];
-  rating: number;
-  image: string;
-  deliveryTimeInDays: number;
-  warrantyPeriodInMonths: number;
-  price: number;
-  discountedPrice: number;
-  discountPercentage: number;
-  status: boolean;
-  gallery: GalleryItem[];
-};
+import { FullProductModel } from '../models/fullProductSchema';
 
-export type GalleryItem = {
-  id: number;
-  url: string;
-};
+export type ProductType = Pick<
+  FullProductModel,
+  | 'id'
+  | 'title'
+  | 'category'
+  | 'thumbnail'
+  | 'images'
+  | 'price'
+  | 'description'
+  | 'discountPercentage'
+  | 'rating'
+  | 'stock'
+  | 'warrantyInformation'
+  | 'shippingInformation'
+>;
+
+export interface ProductProps {
+  product: ProductType;
+}
+
+export type ListProductType = Pick<
+  FullProductModel,
+  'id' | 'title' | 'thumbnail' | 'price' | 'discountPercentage' | 'stock'
+>;
+
+export interface ProductWithCartInfo extends ListProductType {
+  currentQuantity: number;
+  isAddedToCart: boolean;
+}

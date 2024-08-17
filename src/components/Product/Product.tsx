@@ -1,36 +1,40 @@
-import { useState } from 'react';
-import { type ProductType } from '../../types/productType';
-import { monthConverter } from '../../utils/functions/monthConverter';
-import { pluralConverter } from '../../utils/functions/pluralConverter';
 import Button from '../Button/Button';
 import PictureGallery from '../PictureGallery/PictureGallery';
 import Rating from '../Rating/Rating';
 import styles from './product.module.css';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
+import { type ProductProps } from '../../types/productType';
+import QuantityButton from '../QuantityButton/QuantityButton';
+import useProduct from './useProduct';
 
-interface ProductProps {
-  product: ProductType;
-}
 const Product: React.FC<ProductProps> = ({ product }) => {
-  const hasDiscount = product.discountedPrice < product.price;
-  const deliveryTime = monthConverter(product.deliveryTimeInDays);
-  const warrantyTime = pluralConverter(product.warrantyPeriodInMonths, 'month');
+  const {
+    selectedImage,
+    currentQuantity,
+    isAddedToCart,
+    handleImageClick,
+    handleIncrement,
+    handleDecrement,
+    handleInputChange,
+    handleAddToCart,
+  } = useProduct({ product });
 
-  const [selectedImage, setSelectedImage] = useState(product.image);
+  const priceWithDiscount = discountedPrice(
+    product.price ?? 0,
+    product.discountPercentage ?? 0
+  );
+  const hasDiscount = priceWithDiscount < product.price;
 
-  const handleImageClick = (url: string) => {
-    setSelectedImage(url);
-  };
+  const hasQuantity = currentQuantity === 0;
 
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {
-    if (product.quantity === 0) {
+    if (product.stock === 0) {
       return <p className={styles.outOfStock}>Out of Stock</p>;
     }
-    if (product.quantity <= 15) {
+    if (product.stock <= 15) {
       return (
-        <p className={styles.inStock}>
-          In Stock - Only {product.quantity} left!
-        </p>
+        <p className={styles.inStock}>In Stock - Only {product.stock} left!</p>
       );
     }
     return <p className={styles.inStock}>In Stock - Enough in stock!</p>;
@@ -43,24 +47,26 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           <img
             className={styles.picture}
             src={selectedImage}
-            alt={product.name}
+            alt={product.title}
             loading="lazy"
             decoding="async"
           />
-          <PictureGallery
-            images={product.gallery}
-            name={product.name}
-            onImageClick={handleImageClick}
-          />
+          {product.images.length > 1 && (
+            <PictureGallery
+              images={product.images}
+              name={product.title}
+              onImageClick={handleImageClick}
+            />
+          )}
         </div>
         <figcaption className={styles.detailsContainer}>
-          <h1 className={styles.title}>{product.name}</h1>
+          <h1 className={styles.title}>{product.title}</h1>
           <div
             className={styles.promotionContainer}
             aria-label="rating and categories"
           >
             <Rating rating={product.rating} />
-            <p className={styles.categories}>{product.categories.join(', ')}</p>
+            <p className={styles.categories}>{product.category}</p>
           </div>
           <div className={styles.stockContainer}>{stockMessage()}</div>
           <p className={styles.description}>{product.description}</p>
@@ -68,16 +74,14 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             className={styles.timesContainer}
             aria-label="delivery and warranty"
           >
-            <p className={styles.times}>{warrantyTime} warranty</p>
-            <p className={styles.times}>Ships in {deliveryTime}</p>
+            <p className={styles.times}>{product.warrantyInformation}</p>
+            <p className={styles.times}>{product.shippingInformation}</p>
           </div>
           <article className={styles.productPricing}>
             <div className={styles.priceContainer}>
               {hasDiscount ? (
                 <p className={styles.paragraphContainer}>
-                  <span className={styles.price}>
-                    ${product.discountedPrice}
-                  </span>
+                  <span className={styles.price}>${priceWithDiscount}</span>
                   <span className={styles.originalPrice}>
                     <del>${product.price}</del>
                   </span>
@@ -94,7 +98,17 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 </span>
               </p>
             </div>
-            <Button>Add to cart</Button>
+            {isAddedToCart && !hasQuantity ? (
+              <QuantityButton
+                quantity={currentQuantity}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+                onInputChange={handleInputChange}
+                background
+              />
+            ) : (
+              <Button onClick={handleAddToCart}>Add to cart</Button>
+            )}
           </article>
         </figcaption>
       </figure>

@@ -3,9 +3,8 @@ import styles from './cartListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useState } from 'react';
 import DeleteButton from '../DeleteButton/DeleteButton';
-import { discountedPrice } from '../../utils/functions/discpuntedPrice';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 interface CartListItemProps {
   id: number;
@@ -14,8 +13,11 @@ interface CartListItemProps {
   price: number;
   discountPercentage?: number;
   quantity: number;
-  onAddToCart?: (id: number, quantity: number) => void;
-  onRemoveFromCart?: (id: number) => void;
+  onAddToCart?: () => void;
+  onRemoveFromCart?: () => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  onInputChange: (value: number) => void;
   hovered?: boolean;
 }
 const CartListItem: React.FC<CartListItemProps> = ({
@@ -26,45 +28,17 @@ const CartListItem: React.FC<CartListItemProps> = ({
   discountPercentage,
   quantity,
   onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
   onRemoveFromCart,
   hovered,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(quantity);
-  const [isAddedToCart, setIsAddedToCart] = useState(true);
-  const [isDeletedFromCart, setIsDeletedFromCart] = useState(false);
+  const priceWithDiscount = discountPercentage
+    ? discountedPrice(price ?? 0, discountPercentage ?? 0)
+    : price;
 
-  const handleIncrement = () => {
-    setCurrentQuantity(prevQuantity => prevQuantity + 1);
-  };
-
-  const handleDecrement = () => {
-    setCurrentQuantity(prevQuantity =>
-      prevQuantity > 1 ? prevQuantity - 1 : 1
-    );
-  };
-
-  const handleInputChange = (value: number) => {
-    if (value > 0) {
-      setCurrentQuantity(value);
-    }
-  };
-
-  const handleAddToCart = () => {
-    setIsAddedToCart(true);
-    setIsDeletedFromCart(false);
-    setCurrentQuantity(1);
-    if (onAddToCart) {
-      onAddToCart(id, 1);
-    }
-  };
-
-  const handleDeleteFromCart = () => {
-    setIsDeletedFromCart(!isDeletedFromCart);
-    setIsAddedToCart(false);
-    if (isDeletedFromCart && onRemoveFromCart) {
-      onRemoveFromCart(id);
-    }
-  };
+  const showAddToCartButton = quantity === 0;
 
   return (
     <article className={styles.listItem}>
@@ -83,30 +57,25 @@ const CartListItem: React.FC<CartListItemProps> = ({
             aria-label={`Product ${name}`}
           >
             <h3
-              className={`${styles.title} ${isDeletedFromCart ? styles.disabled : ''}`}
+              className={`${styles.title} ${quantity === 0 ? styles.disabled : ''}`}
             >
               {name}
             </h3>
-            <p className={styles.price}>
-              $
-              {discountPercentage !== undefined
-                ? discountedPrice(price, discountPercentage)
-                : price}
-            </p>
+            <p className={styles.price}>${priceWithDiscount}</p>
           </Link>
         </figcaption>
       </figure>
       <div className={styles.actions}>
-        {isAddedToCart && !isDeletedFromCart ? (
+        {quantity >= 1 ? (
           <QuantityButton
-            quantity={currentQuantity}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onInputChange={handleInputChange}
+            quantity={quantity}
+            onIncrement={onIncrement}
+            onDecrement={onDecrement}
+            onInputChange={onInputChange}
             hovered={hovered}
           />
         ) : (
-          <Button padding="16px 16px" onClick={handleAddToCart}>
+          <Button padding="16px 16px" onClick={onAddToCart}>
             <CartIcon
               width={18}
               height={18}
@@ -115,7 +84,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             />
           </Button>
         )}
-        {!isDeletedFromCart && <DeleteButton onClick={handleDeleteFromCart} />}
+        {!showAddToCartButton && <DeleteButton onClick={onRemoveFromCart} />}
       </div>
     </article>
   );

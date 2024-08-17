@@ -1,10 +1,47 @@
 import { useState } from 'react';
 import CartListItem from '../CartListItem/CartListItem';
+import {
+  addToCart,
+  incrementQuantity,
+  decrementQuantity,
+  updateQuantity,
+  deleteProduct,
+} from '../../store/slices/cartSlice';
 import styles from './basket.module.css';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import Loader from '../Loader/Loader';
+import ErrorComponent from '../ErrorComponent/ErrorComponent';
 const Basket = () => {
-  const cart = useAppSelector(state => state.cart.cart);
+  const dispatch = useAppDispatch();
+
+  const { cart, loading, error } = useAppSelector(state => state.cart);
+
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+
+  const handleIncrement = (id: number) => {
+    dispatch(incrementQuantity(id));
+  };
+
+  const handleDecrement = (id: number) => {
+    dispatch(decrementQuantity(id));
+  };
+
+  const handleInputChange = (id: number, value: number) => {
+    dispatch(updateQuantity({ id, quantity: value }));
+  };
+
+  const handleRemoveFromCart = (id: number) => {
+    dispatch(deleteProduct(id));
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <ErrorComponent />;
+  }
+
   return (
     <section className={styles.basketContainer}>
       <h1 className={styles.title}>My cart</h1>
@@ -26,6 +63,21 @@ const Basket = () => {
                   discountPercentage={product.discountPercentage}
                   quantity={product.quantity}
                   hovered={hoveredItem === product.id}
+                  onAddToCart={() =>
+                    dispatch(
+                      addToCart({
+                        id: product.id,
+                        title: product.title,
+                        price: product.price,
+                        discountPercentage: product.discountPercentage ?? 0,
+                        thumbnail: product.thumbnail,
+                      })
+                    )
+                  }
+                  onIncrement={() => handleIncrement(product.id)}
+                  onDecrement={() => handleDecrement(product.id)}
+                  onInputChange={value => handleInputChange(product.id, value)}
+                  onRemoveFromCart={() => handleRemoveFromCart(product.id)}
                 />
               </li>
             ))}
@@ -37,11 +89,15 @@ const Basket = () => {
             </dl>
             <dl className={styles.discountBox}>
               <dt className={styles.noDiscountText}>Price without discount</dt>
-              <dd className={styles.noDiscountNumbers}>${cart?.total}</dd>
+              <dd className={styles.noDiscountNumbers}>
+                ${+cart?.total.toFixed(2)}
+              </dd>
             </dl>
             <dl className={styles.totalBox}>
               <dt className={styles.total}>Total price</dt>
-              <dd className={styles.totalPrice}>${cart?.discountedTotal}</dd>
+              <dd className={styles.totalPrice}>
+                ${+cart?.discountedTotal.toFixed(2)}
+              </dd>
             </dl>
           </div>
         </div>

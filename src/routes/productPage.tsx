@@ -1,42 +1,65 @@
 /* eslint-disable prettier/prettier */
 import { Helmet } from 'react-helmet-async';
-import productMock from '../utils/mocks/productMock';
 import { useParams } from 'react-router-dom';
-import productListMock from '../utils/mocks/productListMock';
 import ErrorPage from './errorPage';
 import Product from '../components/Product/Product';
 import { type ProductType } from '../types/productType';
+import { useGetProductByIdQuery } from '../store/slices/productsApiSlice';
+import NoMatchPage from './noMatch';
+import Loader from '../components/Loader/Loader';
 
 export default function ProductPage() {
   const { productId } = useParams();
 
-  // NOTE: to be changed when server will be ready
-  const baseProduct =
-    productListMock.find(item => item.id === Number(productId)) || productMock;
+  const numericProductId = productId ? parseInt(productId, 10) : undefined;
 
-  const product: ProductType = baseProduct
-    ? {
-      ...baseProduct,
-      ...productMock,
-    }
-    : productMock;
+  const { data, error, isLoading } = useGetProductByIdQuery(numericProductId!);
 
-  if (!product) {
+  if (!numericProductId) {
+    return <NoMatchPage />;
+  }
+
+  if (error) {
     return <ErrorPage />;
   }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const productData: ProductType | undefined = data
+    ? {
+      id: data.id,
+      title: data.title,
+      category: data.category,
+      thumbnail: data.thumbnail,
+      images: data.images,
+      price: data.price,
+      description: data.description,
+      discountPercentage: data.discountPercentage,
+      rating: data.rating,
+      stock: data.stock,
+      warrantyInformation: data.warrantyInformation,
+      shippingInformation: data.shippingInformation,
+    }
+    : undefined;
 
 
   return (
     <>
       <Helmet>
-        <title>{product.name} | Goods4you</title>
+        <title>{data?.title} | Goods4you</title>
         <meta
           name="description"
           content="Any products from famous brands with worldwide delivery"
         />
         <meta name="robots" content="noindex" />
       </Helmet>
-      <Product product={product} />
+      {productData ? (
+        <Product product={productData} />
+      ) : (
+        <div>No product data available</div>
+      )}
     </>
   );
 }

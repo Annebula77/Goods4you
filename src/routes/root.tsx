@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
+import styles from './root.module.css';
 
 export default function Root() {
   return (
@@ -23,8 +24,8 @@ export default function Root() {
       </Main>
       <Footer />
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position="top-center"
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -32,7 +33,8 @@ export default function Root() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="colored"
+        className={styles.toast}
       />
     </HelmetProvider>
   );

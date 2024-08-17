@@ -11,7 +11,7 @@
 
 .inputItem {
   box-sizing: border-box;
-  width: 100%;
+  width: fit-content;
   min-width: 40px;
   margin: 0;
   padding: 0;
@@ -22,7 +22,7 @@
 
 .numberInput {
   box-sizing: border-box;
-  width: 50px;
+  width: 60px;
   margin: 0;
   padding: 0;
   text-decoration: none;

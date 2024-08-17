@@ -1,4 +1,4 @@
-import StarIcon from '../icons/StarIcon';
+import StarIcon from '../icons/StarIcon/StarIcon';
 import styles from './rating.module.css';
 
 interface StarRatingProps {

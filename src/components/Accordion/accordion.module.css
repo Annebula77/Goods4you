@@ -1,4 +1,8 @@
 .accordion {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   background-color: inherit;
   display: flex;
   flex-direction: row;
@@ -6,7 +10,11 @@
 }
 
 .item {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 1);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -36,6 +44,7 @@
 
 .content {
   max-height: 0;
+  width: 100%;
   overflow: hidden;
   transition: max-height 0.3s ease, padding 0.3s ease;
   padding: 0 16px;
@@ -58,10 +67,12 @@
 
 .content.open {
   max-height: 200px;
+  width: 100%;
   padding: 20px 0 18px;
 }
 
 .content .answer {
+  width: 100%;
   margin: 0;
   font-size: 16px;
 }

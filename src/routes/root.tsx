@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
+import styles from './root.module.css';
 
 export default function Root() {
   return (
@@ -33,6 +34,7 @@ export default function Root() {
         draggable
         pauseOnHover
         theme="colored"
+        className={styles.toast}
       />
     </HelmetProvider>
   );

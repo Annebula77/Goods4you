@@ -22,7 +22,6 @@ export default function Root() {
       <Main>
         <Outlet />
       </Main>
-      <Footer />
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -34,8 +33,9 @@ export default function Root() {
         draggable
         pauseOnHover
         theme="colored"
-        className={styles.toast}
+        toastClassName={styles.toast}
       />
+      <Footer />
     </HelmetProvider>
   );
 }

@@ -1,3 +1,4 @@
 .toast {
-  top: calc(100vh - 40vh);
+  position: fixed;
+  top: 50vh;
 }

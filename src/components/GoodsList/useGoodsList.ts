@@ -85,7 +85,7 @@ export const useGoodsList = () => {
     dispatch(setSkip(0));
     dispatch(setLimit(12));
     dispatch(setLoadedProducts([]));
-  }, 500);
+  }, 800);
 
   const handleAddToCart = (id: number) => {
     const product = loadedProducts.find(p => p.id === id);

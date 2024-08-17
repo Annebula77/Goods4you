@@ -1,0 +1,6 @@
+# Игнорирование всех файлов Storybook
+**/*.stories.js
+**/*.stories.jsx
+**/*.stories.ts
+**/*.stories.tsx
+.storybook/

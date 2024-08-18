@@ -229,3 +229,10 @@
     gap: 20px;
   }
 }
+
+@container (min-width: 1500px) {
+  .basketContainer {
+    padding: 48px 250px 92px;
+  }
+
+}

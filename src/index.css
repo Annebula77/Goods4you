@@ -41,7 +41,7 @@ body {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  max-width: 1440px;
+  width: 100%;
 
 }
 

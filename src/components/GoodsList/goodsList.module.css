@@ -51,3 +51,9 @@
   }
 
 }
+
+@container (min-width: 1500px) {
+  .goodsContainer {
+    padding: 48px 300px 48px;
+  }
+}

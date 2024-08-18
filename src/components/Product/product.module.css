@@ -277,3 +277,11 @@
     gap: 40px;
   }
 }
+
+@container (min-width: 1500px) {
+  .productContainer {
+    padding: 48px 340px 60px;
+
+  }
+
+}

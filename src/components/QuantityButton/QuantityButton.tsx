@@ -39,7 +39,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           disabled={decrementDisabled || quantity <= 0}
           padding="23.5px 16px"
         >
-          <MinusIcon className={styles.icon} />
+          <MinusIcon className={styles.icon} aria-label="decrease quantity" />
         </Button>
       </li>
       <li className={styles.inputItem}>
@@ -58,7 +58,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           disabled={incrementDisabled}
           padding="16px"
         >
-          <PlusIcon className={styles.icon} />
+          <PlusIcon className={styles.icon} aria-label="increase quantity" />
         </Button>
       </li>
     </ul>

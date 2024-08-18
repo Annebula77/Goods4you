@@ -29,7 +29,7 @@
   border-radius: var(--border-radius);
 }
 
-.link {
+.titleWrapper {
   box-sizing: border-box;
   width: 100%;
   margin: 0;
@@ -37,7 +37,6 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  text-decoration: none;
 }
 
 .title {

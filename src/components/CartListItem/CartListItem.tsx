@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './cartListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
@@ -34,14 +34,23 @@ const CartListItem: React.FC<CartListItemProps> = ({
   onRemoveFromCart,
   hovered,
 }) => {
+  const navigate = useNavigate();
   const priceWithDiscount = discountPercentage
     ? discountedPrice(price ?? 0, discountPercentage ?? 0)
     : price;
 
   const showAddToCartButton = quantity === 0;
 
+  const handleItemClick = () => {
+    navigate(`/product/${id}`);
+  };
+
+  const handleButtonClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   return (
-    <article className={styles.listItem}>
+    <article className={styles.listItem} onClick={handleItemClick}>
       <figure className={styles.imageWrapper}>
         <img
           className={styles.image}
@@ -51,21 +60,17 @@ const CartListItem: React.FC<CartListItemProps> = ({
           decoding="async"
         />
         <figcaption className={styles.description}>
-          <Link
-            to={`/product/${id}`}
-            className={styles.link}
-            aria-label={`Product ${name}`}
-          >
+          <div className={styles.titleWrapper}>
             <h3
               className={`${styles.title} ${quantity === 0 ? styles.disabled : ''}`}
             >
               {name}
             </h3>
             <p className={styles.price}>${priceWithDiscount}</p>
-          </Link>
+          </div>
         </figcaption>
       </figure>
-      <div className={styles.actions}>
+      <div className={styles.actions} onClick={handleButtonClick}>
         {quantity >= 1 ? (
           <QuantityButton
             quantity={quantity}

@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import ErrorPage from './errorPage';
 import Product from '../components/Product/Product';
 import { type ProductType } from '../types/productType';
 import { useGetProductByIdQuery } from '../store/slices/productsApiSlice';
 import NoMatchPage from './noMatch';
 import Loader from '../components/Loader/Loader';
+import ErrorPage from './errorPage';
 
 export default function ProductPage() {
   const { productId } = useParams();
@@ -16,11 +16,11 @@ export default function ProductPage() {
   const { data, error, isLoading } = useGetProductByIdQuery(numericProductId!);
 
   if (!numericProductId) {
-    return <NoMatchPage />;
+    return <ErrorPage />;
   }
 
   if (error) {
-    return <ErrorPage />;
+    return <NoMatchPage />;
   }
 
   if (isLoading) {

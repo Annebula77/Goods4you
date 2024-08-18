@@ -28,7 +28,7 @@ const Header = () => {
         <NavigationLink to="#faq" label="FAQ" />
         <NavigationLink to="/cart" label="Cart">
           <div className={styles.cartWrapper}>
-            <CartIcon aria-label="Cart Icon" />
+            <CartIcon aria-label="Cart Button" />
             {cartTotalItems ? <Counter quantity={cartTotalItems} /> : null}
           </div>
         </NavigationLink>

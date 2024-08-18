@@ -1,0 +1,104 @@
+:root {
+  font-family: Jost, system-ui, Helvetica, Arial, sans-serif;
+  background-color: rgba(255, 255, 255, 1);
+
+
+
+  --border-radius: 4px;
+
+  --background-blue: rgba(72, 66, 131, 1);
+  --background-grey: rgba(68, 75, 88, 1);
+  --background-grey-light: rgba(246, 246, 246, 1);
+
+  --button-red-default: rgba(241, 79, 79, 1);
+  --button-red-hover: rgba(140, 40, 40, 1);
+  --button-red-disabled: rgba(248, 175, 175, 1);
+
+  --text-contrast: rgba(255, 255, 255, 1);
+  --text-contrast-hover: rgba(196, 196, 196, 1);
+  --text-grey-dark: rgba(68, 75, 88, 1);
+  --text-grey-light: rgba(178, 181, 187, 1);
+
+  --space3XL: 40px;
+
+  --transition-duration: 0.5s;
+  --transition-timing-function: ease-in-out;
+
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  container-type: inline-size;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 1440px;
+
+}
+
+
+
+#root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('./fonts/Jost-Regular.woff2') format('woff2'),
+    url('./fonts/Jost-Regular.woff') format('woff'),
+    url('./fonts/Jost-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('./fonts/Jost-Medium.woff2') format('woff2'),
+    url('./fonts/Jost-Medium.woff') format('woff'),
+    url('./fonts/Jost-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('./fonts/Jost-SemiBold.woff2') format('woff2'),
+    url('./fonts/Jost-SemiBold.woff') format('woff'),
+    url('./fonts/Jost-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('./fonts/Jost-Bold.woff2') format('woff2'),
+    url('./fonts/Jost-Bold.woff') format('woff'),
+    url('./fonts/Jost-Bold.ttf') format('truetype');
+}

@@ -1,0 +1,20 @@
+.navigationLink {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  text-decoration: none;
+  color: var(--text-contrast);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.43;
+  transition-property: all;
+  transition: color var(--transition-duration) var(--transition-timing-function);
+}
+
+.hover {
+  transition-property: all;
+  transition: color var(--transition-duration) var(--transition-timing-function);
+  color: var(--text-contrast-hover);
+  text-decoration: underline;
+}

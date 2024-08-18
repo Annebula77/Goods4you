@@ -1,0 +1,53 @@
+.goodsContainer {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+  padding: 48px 130px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.goodsContainer:nth-child(4) {
+  justify-self: center;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  color: var(--text-grey-dark);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.56;
+}
+
+.buttonContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+@container (max-width: 852px) {
+  .goodsContainer {
+
+    padding: 48px 90px 48px;
+  }
+
+}
+
+@container (max-width: 584px) {
+  .goodsContainer {
+
+    padding: 48px 20px 48px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+}

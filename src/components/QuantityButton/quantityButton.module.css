@@ -1,0 +1,60 @@
+.inputContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  gap: 20px;
+}
+
+.inputItem {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.numberInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 50px;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-grey-dark);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  border: none;
+  outline: none;
+  transition: background-color var(--transition-duration) var(--transition-timing-function);
+}
+
+
+.hovered {
+  background-color: var(--background-grey-light);
+}
+
+
+.icon {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+}
+
+@container (max-width: 852px) {
+  .inputContainer {
+    gap: 10px;
+  }
+
+}

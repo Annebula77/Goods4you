@@ -1,0 +1,20 @@
+.logoLink {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.logo {
+  color: var(--text-contrast);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.47;
+}
+
+@container (max-width: 584px) {
+  .logo {
+    font-size: 24px;
+
+  }
+}

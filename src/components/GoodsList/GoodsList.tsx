@@ -43,7 +43,7 @@ const GoodsList = () => {
       )}
       {loadedProducts.length < totalProducts && (
         <div className={styles.buttonContainer}>
-          <Button onClick={handleLoadMore}>Show more</Button>
+          <Button onClick={handleLoadMore} type='button'>Show more</Button>
         </div>
       )}
     </section>

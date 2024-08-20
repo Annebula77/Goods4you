@@ -8,13 +8,19 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
 import { fetchCart } from '../../store/thunks/cartThunk';
 
-const Header = () => {
+interface HeaderProps {
+  isLoginPage?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // NOTE: In the mock file are listed different users, sorted by cart quantity. Use them for testing purposes (oneCartUsers[1].id is as on Figma)
-    dispatch(fetchCart({ userId: oneCartUsers[1].id }));
-  }, [dispatch]);
+    if (!isLoginPage) {
+      dispatch(fetchCart({ userId: oneCartUsers[1].id }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity
@@ -24,15 +30,19 @@ const Header = () => {
     <header className={styles.headerContainer}>
       <Logo aria-label="Header Logo" />
       <nav className={styles.linkContainer} aria-label="Main Navigation">
-        <NavigationLink to="#catalog" label="Catalog" />
-        <NavigationLink to="#faq" label="FAQ" />
-        <NavigationLink to="/cart" label="Cart">
-          <div className={styles.cartWrapper}>
-            <CartIcon aria-label="Cart Button" />
-            {cartTotalItems ? <Counter quantity={cartTotalItems} /> : null}
-          </div>
-        </NavigationLink>
-        <NavigationLink to="/profile" label={oneCartUsers[1].name} />
+        {!isLoginPage && (
+          <>
+            <NavigationLink to="#catalog" label="Catalog" />
+            <NavigationLink to="#faq" label="FAQ" />
+            <NavigationLink to="/cart" label="Cart">
+              <div className={styles.cartWrapper}>
+                <CartIcon aria-label="Cart Button" />
+                {cartTotalItems ? <Counter quantity={cartTotalItems} /> : null}
+              </div>
+            </NavigationLink>
+            <NavigationLink to="/profile" label={oneCartUsers[1].name} />
+          </>
+        )}
       </nav>
     </header>
   );

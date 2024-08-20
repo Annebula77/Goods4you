@@ -11,6 +11,8 @@ import './index.css';
 import CatalogPage from './routes/catalogPage.tsx';
 import CartPage from './routes/cartPage.tsx';
 import ProductPage from './routes/productPage.tsx';
+import LoginLayout from './routes/loginLayout.tsx';
+import LoginPage from './routes/loginPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,16 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <NoMatchPage />,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <LoginLayout />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
       },
     ],
   },

@@ -80,7 +80,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             hovered={hovered}
           />
         ) : (
-          <Button padding="16px 16px" onClick={onAddToCart}>
+          <Button padding="16px 16px" onClick={onAddToCart} type="button">
             <CartIcon
               width={18}
               height={18}

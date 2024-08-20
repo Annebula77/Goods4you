@@ -4,7 +4,7 @@ interface SearchInputProps {
 }
 const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
   return (
-    <div>
+    <>
       <input
         className={styles.search}
         type="text"
@@ -17,7 +17,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
         maxLength={60}
         onChange={onChange}
       />
-    </div>
+    </>
   );
 };
 

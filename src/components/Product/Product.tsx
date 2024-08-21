@@ -107,7 +107,9 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 background
               />
             ) : (
-              <Button onClick={handleAddToCart}>Add to cart</Button>
+              <Button onClick={handleAddToCart} type="button">
+                Add to cart
+              </Button>
             )}
           </article>
         </figcaption>

@@ -13,7 +13,15 @@ export const fetchCart = createAsyncThunk<
   { rejectValue: string }
 >('cart/fetchCart', async ({ userId }, { rejectWithValue }) => {
   try {
-    const response = await fetch(getCartUrl(userId));
+    const token = localStorage.getItem('token');
+    const response = await fetch(getCartUrl(userId), {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
       throw new Error(`Failed to fetch cart data: ${response.status}`);
     }

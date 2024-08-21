@@ -87,7 +87,11 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               onInputChange={value => onInputChange(id, value)}
             />
           ) : (
-            <Button padding="16px 16px" onClick={() => onAddToCart(id)}>
+            <Button
+              type="button"
+              padding="16px 16px"
+              onClick={() => onAddToCart(id)}
+            >
               <CartIcon
                 width={18}
                 height={18}

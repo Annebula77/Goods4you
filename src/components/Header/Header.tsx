@@ -22,13 +22,14 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
 
   useEffect(() => {
-    if (!isLoginPage) {
-      if (!token || (error && 'status' in error && error.status === 401)) {
-        localStorage.removeItem('token');
-        navigate('/login');
-      } else if (user) {
-        dispatch(fetchCart({ userId: user.id }));
-      }
+    if (isLoginPage) {
+      return;
+    }
+    if (!token || (error && 'status' in error && error.status === 401)) {
+      localStorage.removeItem('token');
+      navigate('/login');
+    } else if (user) {
+      dispatch(fetchCart({ userId: user.id }));
     }
   }, [token, user, error, isLoginPage, navigate, dispatch]);
 

@@ -23,14 +23,14 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
 
   useEffect(() => {
     if (!isLoginPage) {
-      if (!token || error) {
+      if (!token || (error && 'status' in error && error.status === 401)) {
+        localStorage.removeItem('token');
         navigate('/login');
       } else if (user) {
         dispatch(fetchCart({ userId: user.id }));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, user, error, isLoginPage, navigate]);
+  }, [token, user, error, isLoginPage, navigate, dispatch]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity

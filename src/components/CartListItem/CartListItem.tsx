@@ -66,7 +66,11 @@ const CartListItem: React.FC<CartListItemProps> = ({
             >
               {name}
             </h3>
-            <p className={styles.price}>${priceWithDiscount}</p>
+            <p
+              className={`${styles.price} ${quantity === 0 ? styles.disabled : ''}`}
+            >
+              ${priceWithDiscount}
+            </p>
           </div>
         </figcaption>
       </figure>

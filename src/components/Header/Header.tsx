@@ -7,7 +7,7 @@ import NavigationLink from '../NavigationLink/NavigationLink';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
 import { fetchCart } from '../../store/thunks/cartThunk';
-import { useGetUserQuery } from '../../store/slices/AuthApiSlice';
+import { useGetUserQuery } from '../../store/slices/authApiSlice';
 
 interface HeaderProps {
   isLoginPage?: boolean;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import styles from './loginForm.module.css';
-import { useLoginMutation } from '../../store/slices/AuthApiSlice';
+import { useLoginMutation } from '../../store/slices/authApiSlice';
 import {
   type LoginRequestModel,
   LoginRequestSchema,

@@ -19,6 +19,7 @@ interface CartListItemProps {
   onDecrement: () => void;
   onInputChange: (value: number) => void;
   hovered?: boolean;
+  isSubmitting?: boolean;
 }
 const CartListItem: React.FC<CartListItemProps> = ({
   id,
@@ -33,6 +34,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
   onInputChange,
   onRemoveFromCart,
   hovered,
+  isSubmitting,
 }) => {
   const navigate = useNavigate();
   const priceWithDiscount = discountPercentage
@@ -82,6 +84,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             onDecrement={onDecrement}
             onInputChange={onInputChange}
             hovered={hovered}
+            disabled={isSubmitting}
           />
         ) : (
           <Button padding="16px 16px" onClick={onAddToCart} type="button">

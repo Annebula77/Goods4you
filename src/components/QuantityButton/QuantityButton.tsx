@@ -12,6 +12,7 @@ interface QuantityButtonProps {
   incrementDisabled?: boolean;
   hovered?: boolean;
   background?: boolean;
+  disabled?: boolean;
 }
 const QuantityButton: React.FC<QuantityButtonProps> = ({
   quantity,
@@ -22,6 +23,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
   incrementDisabled,
   hovered,
   background,
+  disabled,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -36,7 +38,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
       <li className={styles.inputItem}>
         <Button
           onClick={onDecrement}
-          disabled={decrementDisabled || quantity <= 0}
+          disabled={disabled || decrementDisabled || quantity <= 0}
           padding="23.5px 16px"
           type="button"
         >
@@ -56,7 +58,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
       <li className={styles.inputItem}>
         <Button
           onClick={onIncrement}
-          disabled={incrementDisabled}
+          disabled={disabled || incrementDisabled}
           padding="16px"
           type="button"
         >

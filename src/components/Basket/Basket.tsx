@@ -27,26 +27,39 @@ const Basket = () => {
   );
 
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleAddToCart = (product: CartProductModel) => {
+    setIsSubmitting(true);
     addProductToCart(product);
+    setIsSubmitting(false);
   };
 
   const handleIncrement = (id: number) => {
+    setIsSubmitting(true);
     incrementProductQuantity(id);
+    setIsSubmitting(false);
   };
 
   const handleDecrement = (id: number) => {
+    setIsSubmitting(true);
     decrementProductQuantity(id);
+    setIsSubmitting(false);
   };
 
   const handleInputChange = (id: number, value: number) => {
+    setIsSubmitting(true);
     updateProductQuantity(id, value);
+    setIsSubmitting(false);
   };
 
   const handleRemoveFromCart = (id: number) => {
+    setIsSubmitting(true);
     const result = validateCartAndProduct(cart, id);
-    if (!result) return;
+    if (!result) {
+      setIsSubmitting(false);
+      return;
+    }
 
     const { cart: validatedCart, product } = result;
 
@@ -61,16 +74,9 @@ const Basket = () => {
       if (response.meta.requestStatus === 'fulfilled') {
         dispatch(addRemovedProduct({ ...product, quantity: 0 }));
       }
+      setIsSubmitting(false);
     });
   };
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <ErrorComponent />;
-  }
 
 
   const allProducts =
@@ -79,6 +85,14 @@ const Basket = () => {
       : [...(cart?.products || []), ...removedProducts];
 
   const showProductList = (cart && cart.products.length > 0) || removedProducts.length > 0
+
+  if (loading && !cart) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <ErrorComponent />;
+  }
 
 
   return (
@@ -107,6 +121,7 @@ const Basket = () => {
                   onDecrement={() => handleDecrement(product.id)}
                   onInputChange={value => handleInputChange(product.id, value)}
                   onRemoveFromCart={() => handleRemoveFromCart(product.id)}
+                  isSubmitting={isSubmitting}
                 />
               </li>
             ))}

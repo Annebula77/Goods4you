@@ -44,6 +44,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     if (stock === 0) {
+      // NOTE: Change toast
       toast.error('Out of stock');
       return;
     }
@@ -103,6 +104,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               type="button"
               padding="16px 16px"
               onClick={handleCartButtonClick}
+              disabled={stock === 0}
             >
               <CartIcon
                 width={18}

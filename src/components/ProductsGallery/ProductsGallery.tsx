@@ -4,7 +4,7 @@ import { type ProductWithCartInfo } from '../../types/productType';
 
 interface ProductsGalleryProps {
   products: ProductWithCartInfo[] | undefined;
-  onAddToCart: (id: number) => void;
+  onAddToCart: (product: ProductWithCartInfo) => void;
   onIncrement: (id: number) => void;
   onDecrement: (id: number) => void;
   onInputChange: (id: number, value: number) => void;
@@ -29,7 +29,7 @@ const ProductsGallery: React.FC<ProductsGalleryProps> = ({
             stock={product.stock}
             currentQuantity={product.currentQuantity}
             isAddedToCart={product.isAddedToCart}
-            onAddToCart={() => onAddToCart(product.id)}
+            onAddToCart={() => onAddToCart(product)}
             onIncrement={() => onIncrement(product.id)}
             onDecrement={() => onDecrement(product.id)}
             onInputChange={value => onInputChange(product.id, value)}

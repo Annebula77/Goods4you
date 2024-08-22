@@ -2,18 +2,16 @@ import { useEffect } from 'react';
 import { debounce, differenceBy } from 'lodash';
 import { useGetProductsQuery } from '../../store/slices/productsApiSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  addToCart,
-  decrementQuantity,
-  incrementQuantity,
-  updateQuantity,
-} from '../../store/slices/cartSlice';
+
 import {
   setLoadedProducts,
   setSkip,
   setSearchTerm,
   setLimit,
 } from '../../store/slices/loadedProductsSlice';
+import { useCartActions } from '../../utils/useCartActions';
+import { type CartProductModel } from '../../models/cartSchema';
+import { type ProductWithCartInfo } from '../../types/productType';
 
 export const useGoodsList = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +19,7 @@ export const useGoodsList = () => {
     state => state.loadedProducts
   );
   const cart = useAppSelector(state => state.cart.cart);
+
   const { data, error, isLoading } = useGetProductsQuery({
     q: searchTerm,
     limit,
@@ -99,35 +98,40 @@ export const useGoodsList = () => {
     dispatch(setLoadedProducts([]));
   }, 800);
 
-  const handleAddToCart = (id: number) => {
-    const product = loadedProducts.find(p => p.id === id);
-    if (product) {
-      dispatch(
-        addToCart({
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          discountPercentage: product.discountPercentage ?? 0,
-          thumbnail: product.thumbnail,
-        })
-      );
-    }
+  const {
+    addProductToCart,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    updateProductQuantity,
+  } = useCartActions();
+
+  const handleAddToCart = (product: ProductWithCartInfo) => {
+    const productForCart: CartProductModel = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      discountPercentage: product.discountPercentage ?? 0,
+      thumbnail: product.thumbnail,
+      total: product.price * 1,
+      discountedTotal:
+        product.price * (1 - (product.discountPercentage ?? 0) / 100),
+    };
+
+    addProductToCart(productForCart);
   };
 
   const handleIncrement = (id: number) => {
-    dispatch(incrementQuantity(id));
+    incrementProductQuantity(id);
   };
 
   const handleDecrement = (id: number) => {
-    dispatch(decrementQuantity(id));
+    decrementProductQuantity(id);
   };
 
   const handleInputChange = (id: number, value: number) => {
-    if (value > 0) {
-      dispatch(updateQuantity({ id, quantity: value }));
-    }
+    updateProductQuantity(id, value);
   };
-
   const handleLoadMore = () => {
     if (data && skip + limit < data.total) {
       dispatch(setSkip(skip + limit));

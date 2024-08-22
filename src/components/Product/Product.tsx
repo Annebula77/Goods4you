@@ -17,7 +17,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     handleDecrement,
     handleInputChange,
     handleAddToCart,
-    hasStock,
+    noStock,
   } = useProduct({ product });
 
   const priceWithDiscount = discountedPrice(
@@ -102,14 +102,18 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             {isAddedToCart && !hasQuantity ? (
               <QuantityButton
                 quantity={currentQuantity}
-                onIncrement={handleIncrement}
-                onDecrement={handleDecrement}
-                onInputChange={handleInputChange}
-                incrementDisabled={hasStock}
+                onIncrement={() => handleIncrement(product.id)}
+                onDecrement={() => handleDecrement(product.id)}
+                onInputChange={value => handleInputChange(product.id, value)}
+                incrementDisabled={noStock}
                 background
               />
             ) : (
-              <Button onClick={handleAddToCart} type="button">
+              <Button
+                onClick={handleAddToCart}
+                type="button"
+                disabled={noStock}
+              >
                 Add to cart
               </Button>
             )}

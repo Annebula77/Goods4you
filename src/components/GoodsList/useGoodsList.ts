@@ -28,35 +28,47 @@ export const useGoodsList = () => {
   });
 
   useEffect(() => {
-    if (data) {
-      const newProducts = data.products.map(product => {
-        const cartProduct = cart?.products.find(p => p.id === product.id);
+    const token = localStorage.getItem('token');
+    const authError =
+      error &&
+      'status' in error &&
+      (error.status === 401 || error.status === 403);
 
-        return {
-          id: product.id,
-          title: product.title,
-          thumbnail: product.thumbnail,
-          price: product.price,
-          discountPercentage: product.discountPercentage,
-          stock: product.stock,
-          quantityInCart: cartProduct ? cartProduct.quantity : 0,
-          currentQuantity: cartProduct ? cartProduct.quantity : 0,
-          isAddedToCart: Boolean(cartProduct),
-        };
-      });
-
-      const uniqueNewProducts = differenceBy(newProducts, loadedProducts, 'id');
-
-      if (uniqueNewProducts.length > 0) {
-        dispatch(
-          setLoadedProducts(
-            skip === 0 ? newProducts : [...loadedProducts, ...uniqueNewProducts]
-          )
-        );
-      }
-      dispatch(setSkip(skip));
-      dispatch(setLimit(limit));
+    if (!token || authError) {
+      return;
     }
+    if (!data) {
+      return;
+    }
+
+    const newProducts = data.products.map(product => {
+      const cartProduct = cart?.products.find(p => p.id === product.id);
+
+      return {
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        price: product.price,
+        discountPercentage: product.discountPercentage,
+        stock: product.stock,
+        quantityInCart: cartProduct ? cartProduct.quantity : 0,
+        currentQuantity: cartProduct ? cartProduct.quantity : 0,
+        isAddedToCart: Boolean(cartProduct),
+      };
+    });
+
+    const uniqueNewProducts = differenceBy(newProducts, loadedProducts, 'id');
+
+    if (uniqueNewProducts.length > 0) {
+      dispatch(
+        setLoadedProducts(
+          skip === 0 ? newProducts : [...loadedProducts, ...uniqueNewProducts]
+        )
+      );
+    }
+    dispatch(setSkip(skip));
+    dispatch(setLimit(limit));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, skip, limit, cart]);
 

@@ -43,6 +43,10 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
 
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation();
+    if (stock === 0) {
+      toast.error('Out of stock');
+      return;
+    }
   };
 
   const handleIncrement = () => {
@@ -51,6 +55,13 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
       return;
     }
     onIncrement(id);
+  };
+
+  const handleCartButtonClick = () => {
+    if (stock === 0) {
+      return;
+    }
+    onAddToCart(id);
   };
 
   return (
@@ -79,18 +90,19 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           <p className={styles.price}>${priceWithDiscount}</p>
         </div>
         <div className={styles.buttonWrapper} onClick={handleButtonClick}>
-          {isAddedToCart ? (
+          {isAddedToCart && stock > 0 ? (
             <QuantityButton
               quantity={currentQuantity}
               onIncrement={handleIncrement}
               onDecrement={() => onDecrement(id)}
               onInputChange={value => onInputChange(id, value)}
+              incrementDisabled={stock <= currentQuantity} // NOTE: toast text to parent level
             />
           ) : (
             <Button
               type="button"
               padding="16px 16px"
-              onClick={() => onAddToCart(id)}
+              onClick={handleCartButtonClick}
             >
               <CartIcon
                 width={18}

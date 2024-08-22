@@ -17,6 +17,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     handleDecrement,
     handleInputChange,
     handleAddToCart,
+    hasStock,
   } = useProduct({ product });
 
   const priceWithDiscount = discountedPrice(
@@ -104,6 +105,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 onIncrement={handleIncrement}
                 onDecrement={handleDecrement}
                 onInputChange={handleInputChange}
+                incrementDisabled={hasStock}
                 background
               />
             ) : (

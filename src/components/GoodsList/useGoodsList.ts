@@ -70,7 +70,7 @@ export const useGoodsList = () => {
     dispatch(setLimit(limit));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, skip, limit, cart]);
+  }, [data, skip, limit, cart, error]);
 
   const updateLoadedProductsWithCartInfo = () => {
     const newProducts = loadedProducts.map(product => {

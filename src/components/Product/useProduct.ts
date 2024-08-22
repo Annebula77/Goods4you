@@ -30,6 +30,8 @@ const useProduct = ({ product }: ProductProps) => {
     dispatch(incrementQuantity(product.id));
   };
 
+  const hasStock = product.stock <= currentQuantity;
+
   const handleDecrement = () => {
     if (currentQuantity === 0) {
       return;
@@ -45,6 +47,10 @@ const useProduct = ({ product }: ProductProps) => {
   };
 
   const handleAddToCart = () => {
+    if (product.stock === 0) {
+      toast.error('Out of stock');
+      return;
+    }
     dispatch(
       addToCart({
         id: product.id,
@@ -65,6 +71,7 @@ const useProduct = ({ product }: ProductProps) => {
     handleDecrement,
     handleInputChange,
     handleAddToCart,
+    hasStock,
   };
 };
 export default useProduct;

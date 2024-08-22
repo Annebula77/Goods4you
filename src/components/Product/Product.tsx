@@ -2,7 +2,6 @@ import Button from '../Button/Button';
 import PictureGallery from '../PictureGallery/PictureGallery';
 import Rating from '../Rating/Rating';
 import styles from './product.module.css';
-import { discountedPrice } from '../../utils/functions/discountedPrice';
 import { type ProductProps } from '../../types/productType';
 import QuantityButton from '../QuantityButton/QuantityButton';
 import useProduct from './useProduct';
@@ -18,15 +17,10 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     handleInputChange,
     handleAddToCart,
     noStock,
+    priceWithDiscount,
+    hasDiscount,
+    hasQuantity,
   } = useProduct({ product });
-
-  const priceWithDiscount = discountedPrice(
-    product.price ?? 0,
-    product.discountPercentage ?? 0
-  );
-  const hasDiscount = priceWithDiscount < product.price;
-
-  const hasQuantity = currentQuantity === 0;
 
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../store/hooks';
 import { type ProductProps } from '../../types/productType';
 import { useCartActions } from '../../utils/useCartActions';
 import { type CartProductModel } from '../../models/cartSchema';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 const useProduct = ({ product }: ProductProps) => {
   const cart = useAppSelector(state => state.cart.cart);
@@ -54,6 +55,14 @@ const useProduct = ({ product }: ProductProps) => {
 
   const noStock = product.stock <= currentQuantity;
 
+  const priceWithDiscount = discountedPrice(
+    product.price ?? 0,
+    product.discountPercentage ?? 0
+  );
+  const hasDiscount = priceWithDiscount < product.price;
+
+  const hasQuantity = currentQuantity === 0;
+
   return {
     selectedImage,
     currentQuantity,
@@ -64,6 +73,9 @@ const useProduct = ({ product }: ProductProps) => {
     handleInputChange,
     handleAddToCart,
     noStock,
+    priceWithDiscount,
+    hasDiscount,
+    hasQuantity,
   };
 };
 export default useProduct;

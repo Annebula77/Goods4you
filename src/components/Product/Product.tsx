@@ -2,7 +2,6 @@ import Button from '../Button/Button';
 import PictureGallery from '../PictureGallery/PictureGallery';
 import Rating from '../Rating/Rating';
 import styles from './product.module.css';
-import { discountedPrice } from '../../utils/functions/discountedPrice';
 import { type ProductProps } from '../../types/productType';
 import QuantityButton from '../QuantityButton/QuantityButton';
 import useProduct from './useProduct';
@@ -17,15 +16,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     handleDecrement,
     handleInputChange,
     handleAddToCart,
+    noStock,
+    priceWithDiscount,
+    hasDiscount,
+    hasQuantity,
+    submittingProducts,
   } = useProduct({ product });
-
-  const priceWithDiscount = discountedPrice(
-    product.price ?? 0,
-    product.discountPercentage ?? 0
-  );
-  const hasDiscount = priceWithDiscount < product.price;
-
-  const hasQuantity = currentQuantity === 0;
 
   // NOTE: if needed to be reused, should be moved to a separate component
   const stockMessage = () => {
@@ -101,13 +97,19 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             {isAddedToCart && !hasQuantity ? (
               <QuantityButton
                 quantity={currentQuantity}
-                onIncrement={handleIncrement}
-                onDecrement={handleDecrement}
-                onInputChange={handleInputChange}
+                onIncrement={() => handleIncrement(product.id)}
+                onDecrement={() => handleDecrement(product.id)}
+                onInputChange={value => handleInputChange(product.id, value)}
+                incrementDisabled={noStock}
                 background
+                disabled={submittingProducts?.[product.id]}
               />
             ) : (
-              <Button onClick={handleAddToCart} type="button">
+              <Button
+                onClick={handleAddToCart}
+                type="button"
+                disabled={noStock || submittingProducts?.[product.id]}
+              >
                 Add to cart
               </Button>
             )}

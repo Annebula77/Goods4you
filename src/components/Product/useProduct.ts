@@ -4,6 +4,7 @@ import { type ProductProps } from '../../types/productType';
 import { useCartActions } from '../../utils/useCartActions';
 import { type CartProductModel } from '../../models/cartSchema';
 import { discountedPrice } from '../../utils/functions/discountedPrice';
+import { toast } from 'react-toastify';
 
 const useProduct = ({ product }: ProductProps) => {
   const cart = useAppSelector(state => state.cart.cart);
@@ -38,7 +39,7 @@ const useProduct = ({ product }: ProductProps) => {
       discountedTotal:
         product.price * (1 - (product.discountPercentage ?? 0) / 100),
     };
-
+    toast.success('Added to cart');
     addProductToCart(productForCart);
   };
 

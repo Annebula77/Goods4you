@@ -24,7 +24,7 @@ export const useCartActions = () => {
 
   const addProductToCart = async (product: CartProductModel) => {
     if (!cart) {
-      toast.error('Unable to update cart. Please try again.');
+      toast.error('User has no cart.');
       return;
     }
 
@@ -58,7 +58,6 @@ export const useCartActions = () => {
 
       const existingProduct = cart.products.find(p => p.id === product.id);
       if (existingProduct) {
-        toast.info('Product is already in the cart');
         return;
       }
 
@@ -150,7 +149,6 @@ export const useCartActions = () => {
 
   const updateProductQuantity = async (id: number, value: number) => {
     if (value < 1) {
-      toast.info('Quantity must be at least 1.');
       return;
     }
 

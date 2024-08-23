@@ -18,24 +18,26 @@ export default function Root() {
         />
         <meta name="robots" content="noindex" />
       </Helmet>
-      <Header />
-      <Main>
-        <Outlet />
-      </Main>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        toastClassName={styles.toast}
-      />
-      <Footer />
+      <>
+        <Header />
+        <Main>
+          <Outlet />
+        </Main>
+        <Footer />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          toastClassName={styles.toast}
+        />
+      </>
     </HelmetProvider>
   );
 }

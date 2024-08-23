@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
@@ -27,14 +28,14 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.7.0",
     "@eslint/js": "^9.8.0",
-    "@storybook/addon-essentials": "^8.1.11",
-    "@storybook/addon-interactions": "^8.1.11",
-    "@storybook/addon-links": "^8.1.11",
-    "@storybook/addon-onboarding": "^8.1.11",
-    "@storybook/blocks": "^8.1.11",
-    "@storybook/react": "^8.1.11",
-    "@storybook/react-vite": "^8.1.11",
-    "@storybook/test": "^8.1.11",
+    "@storybook/addon-essentials": "8.2.9",
+    "@storybook/addon-interactions": "8.2.9",
+    "@storybook/addon-links": "8.2.9",
+    "@storybook/addon-onboarding": "8.2.9",
+    "@storybook/blocks": "8.2.9",
+    "@storybook/react": "8.2.9",
+    "@storybook/react-vite": "8.2.9",
+    "@storybook/test": "8.2.9",
     "@types/lodash": "^4.17.7",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -46,10 +47,11 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "eslint-plugin-storybook": "^0.6.7",
     "globals": "^15.9.0",
-    "storybook": "^8.1.11",
+    "storybook": "8.2.9",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.3.1",
-    "vite": "^5.4.0"
+    "vite": "^5.4.0",
+    "vitest": "^2.0.5"
   },
   "eslintConfig": {
     "extends": [

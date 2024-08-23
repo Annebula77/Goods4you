@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';

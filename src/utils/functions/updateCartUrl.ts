@@ -1,2 +1,2 @@
 export const updateCartUrl = (cartId: number) =>
-  `https://dummyjson.com/carts/${cartId}`;
+  `https://dummyjson.com/auth/carts/${cartId}`;

@@ -20,12 +20,17 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const token = localStorage.getItem('token');
 
   const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
-
   useEffect(() => {
     if (isLoginPage) {
       return;
     }
-    if (!token || (error && 'status' in error && error.status === 401)) {
+
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (error && 'status' in error && error.status === 401) {
       localStorage.removeItem('token');
       navigate('/login');
     } else if (user) {

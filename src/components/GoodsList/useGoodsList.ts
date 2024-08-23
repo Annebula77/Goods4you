@@ -12,31 +12,31 @@ import {
 import { useCartActions } from '../../utils/useCartActions';
 import { type CartProductModel } from '../../models/cartSchema';
 import { type ProductWithCartInfo } from '../../types/productType';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { ErrorType } from '../../types/errorType';
 
-export const useGoodsList = () => {
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+export const useGoodsList = (user: User | undefined, error: ErrorType) => {
   const dispatch = useAppDispatch();
   const { loadedProducts, skip, searchTerm, limit } = useAppSelector(
     state => state.loadedProducts
   );
   const cart = useAppSelector(state => state.cart.cart);
+  const isAuthenticated = Boolean(user) && !error;
 
-  const { data, error, isLoading } = useGetProductsQuery({
-    q: searchTerm,
-    limit,
-    skip,
-  });
+  const queryArgs = isAuthenticated
+    ? { q: searchTerm, limit, skip }
+    : skipToken;
+
+  const { data, isLoading } = useGetProductsQuery(queryArgs);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const authError =
-      error &&
-      'status' in error &&
-      (error.status === 401 || error.status === 403);
-
-    if (!token || authError) {
-      return;
-    }
-    if (!data) {
+    if (!isAuthenticated || !data) {
       return;
     }
 
@@ -69,7 +69,7 @@ export const useGoodsList = () => {
     dispatch(setLimit(limit));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, skip, limit, cart, error]);
+  }, [data, skip, limit, cart, error, user]);
 
   const updateLoadedProductsWithCartInfo = () => {
     const newProducts = loadedProducts.map(product => {

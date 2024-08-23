@@ -21,7 +21,8 @@ const GoodsList = () => {
     handleDecrement,
     handleInputChange,
     handleLoadMore,
-    totalProducts
+    totalProducts,
+    submittingProducts
   } = useGoodsList();
 
   return (
@@ -38,6 +39,7 @@ const GoodsList = () => {
           onIncrement={handleIncrement}
           onDecrement={handleDecrement}
           onInputChange={handleInputChange}
+          submittingProducts={submittingProducts}
 
         />
       )}

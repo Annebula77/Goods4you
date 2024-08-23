@@ -19,6 +19,7 @@ const useProduct = ({ product }: ProductProps) => {
     incrementProductQuantity,
     decrementProductQuantity,
     updateProductQuantity,
+    submittingProducts,
   } = useCartActions();
 
   const handleImageClick = (url: string) => {
@@ -76,6 +77,7 @@ const useProduct = ({ product }: ProductProps) => {
     priceWithDiscount,
     hasDiscount,
     hasQuantity,
+    submittingProducts,
   };
 };
 export default useProduct;

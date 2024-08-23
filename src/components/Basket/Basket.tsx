@@ -20,6 +20,7 @@ const Basket = () => {
     incrementProductQuantity,
     decrementProductQuantity,
     updateProductQuantity,
+    submittingProducts
   } = useCartActions();
 
   const { cart, removedProducts, loading, error } = useAppSelector(
@@ -27,37 +28,36 @@ const Basket = () => {
   );
 
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleAddToCart = (product: CartProductModel) => {
-    setIsSubmitting(true);
+
     addProductToCart(product);
-    setIsSubmitting(false);
+
   };
 
   const handleIncrement = (id: number) => {
-    setIsSubmitting(true);
+
     incrementProductQuantity(id);
-    setIsSubmitting(false);
+
   };
 
   const handleDecrement = (id: number) => {
-    setIsSubmitting(true);
+
     decrementProductQuantity(id);
-    setIsSubmitting(false);
+
   };
 
   const handleInputChange = (id: number, value: number) => {
-    setIsSubmitting(true);
+
     updateProductQuantity(id, value);
-    setIsSubmitting(false);
+
   };
 
   const handleRemoveFromCart = (id: number) => {
-    setIsSubmitting(true);
+
     const result = validateCartAndProduct(cart, id);
     if (!result) {
-      setIsSubmitting(false);
+
       return;
     }
 
@@ -74,7 +74,7 @@ const Basket = () => {
       if (response.meta.requestStatus === 'fulfilled') {
         dispatch(addRemovedProduct({ ...product, quantity: 0 }));
       }
-      setIsSubmitting(false);
+
     });
   };
 
@@ -121,7 +121,7 @@ const Basket = () => {
                   onDecrement={() => handleDecrement(product.id)}
                   onInputChange={value => handleInputChange(product.id, value)}
                   onRemoveFromCart={() => handleRemoveFromCart(product.id)}
-                  isSubmitting={isSubmitting}
+                  isSubmitting={submittingProducts[product.id]}
                 />
               </li>
             ))}

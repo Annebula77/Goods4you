@@ -8,6 +8,8 @@ interface ProductsGalleryProps {
   onIncrement: (id: number) => void;
   onDecrement: (id: number) => void;
   onInputChange: (id: number, value: number) => void;
+  disabled?: boolean;
+  submittingProducts?: { [key: number]: boolean };
 }
 const ProductsGallery: React.FC<ProductsGalleryProps> = ({
   products,
@@ -15,6 +17,7 @@ const ProductsGallery: React.FC<ProductsGalleryProps> = ({
   onIncrement,
   onDecrement,
   onInputChange,
+  submittingProducts,
 }) => {
   return (
     <ul className={styles.list}>
@@ -33,6 +36,7 @@ const ProductsGallery: React.FC<ProductsGalleryProps> = ({
             onIncrement={() => onIncrement(product.id)}
             onDecrement={() => onDecrement(product.id)}
             onInputChange={value => onInputChange(product.id, value)}
+            disabled={submittingProducts?.[product.id]}
           />
         </li>
       ))}

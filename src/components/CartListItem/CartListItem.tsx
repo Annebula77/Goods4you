@@ -87,7 +87,12 @@ const CartListItem: React.FC<CartListItemProps> = ({
             disabled={isSubmitting}
           />
         ) : (
-          <Button padding="16px 16px" onClick={onAddToCart} type="button">
+          <Button
+            padding="16px 16px"
+            onClick={onAddToCart}
+            type="button"
+            disabled={isSubmitting}
+          >
             <CartIcon
               width={18}
               height={18}
@@ -96,7 +101,9 @@ const CartListItem: React.FC<CartListItemProps> = ({
             />
           </Button>
         )}
-        {!showAddToCartButton && <DeleteButton onClick={onRemoveFromCart} />}
+        {!showAddToCartButton && (
+          <DeleteButton onClick={onRemoveFromCart} disabled={isSubmitting} />
+        )}
       </div>
     </article>
   );

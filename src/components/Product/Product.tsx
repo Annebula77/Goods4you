@@ -20,6 +20,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
     priceWithDiscount,
     hasDiscount,
     hasQuantity,
+    submittingProducts,
   } = useProduct({ product });
 
   // NOTE: if needed to be reused, should be moved to a separate component
@@ -101,12 +102,13 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 onInputChange={value => handleInputChange(product.id, value)}
                 incrementDisabled={noStock}
                 background
+                disabled={submittingProducts?.[product.id]}
               />
             ) : (
               <Button
                 onClick={handleAddToCart}
                 type="button"
-                disabled={noStock}
+                disabled={noStock || submittingProducts?.[product.id]}
               >
                 Add to cart
               </Button>

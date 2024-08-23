@@ -103,6 +103,7 @@ export const useGoodsList = () => {
     incrementProductQuantity,
     decrementProductQuantity,
     updateProductQuantity,
+    submittingProducts,
   } = useCartActions();
 
   const handleAddToCart = (product: ProductWithCartInfo) => {
@@ -149,6 +150,7 @@ export const useGoodsList = () => {
     handleDecrement,
     handleInputChange,
     handleLoadMore,
+    submittingProducts,
     totalProducts: data?.total ?? 0,
   };
 };

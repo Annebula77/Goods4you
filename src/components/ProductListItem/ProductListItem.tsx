@@ -19,6 +19,7 @@ interface ProductListItemProps {
   onIncrement: (id: number) => void;
   onDecrement: (id: number) => void;
   onInputChange: (id: number, value: number) => void;
+  disabled?: boolean;
 }
 const ProductListItem: React.FC<ProductListItemProps> = ({
   id,
@@ -33,6 +34,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
   onIncrement,
   onDecrement,
   onInputChange,
+  disabled,
 }) => {
   const navigate = useNavigate();
   const priceWithDiscount = discountedPrice(price, discountPercentage ?? 0);
@@ -98,13 +100,14 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               onDecrement={() => onDecrement(id)}
               onInputChange={value => onInputChange(id, value)}
               incrementDisabled={stock <= currentQuantity} // NOTE: toast text to parent level
+              disabled={disabled}
             />
           ) : (
             <Button
               type="button"
               padding="16px 16px"
               onClick={handleCartButtonClick}
-              disabled={stock === 0}
+              disabled={stock === 0 || disabled}
             >
               <CartIcon
                 width={18}

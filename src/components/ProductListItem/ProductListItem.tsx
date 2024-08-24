@@ -100,6 +100,8 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               onInputChange={value => onInputChange(id, value)}
               incrementDisabled={stock <= currentQuantity}
               disabled={disabled}
+              testDecrementButton="decrement-button"
+              testIncrementButton="increment-button"
             />
           ) : (
             <Button
@@ -108,12 +110,13 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               onClick={handleCartButtonClick}
               disabled={stock === 0 || disabled}
               aria-label="Add to cart"
+              dataTestId="add-to-cart-button"
             >
               <CartIcon
                 width={18}
                 height={18}
                 className={styles.icon}
-                aria-description="Add to cart"
+                aria-description="Cart svg"
               />
             </Button>
           )}

@@ -23,21 +23,6 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   useEffect(() => {
     if (isLoginPage) return;
 
-    if (!token) {
-      navigate('/login');
-      console.log('Token navigates to login');
-      return;
-    }
-
-    if (user) {
-      dispatch(fetchCart({ userId: user.id }));
-      console.log('Fetching cart for user:', user.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, user, isLoginPage]);
-  useEffect(() => {
-    if (isLoginPage) return;
-
     if (error && 'status' in error && error.status === 401) {
       console.log('Unauthorized access, token may be expired or invalid');
       dispatch(setToken(null));
@@ -46,8 +31,22 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
       console.log('Error navigates to login');
       return;
     }
+
+    if (!token) {
+      navigate('/login');
+      console.log('Token navigates to login');
+      return;
+    }
+
+    if (!user) {
+      return;
+    }
+
+    dispatch(fetchCart({ userId: user.id }));
+    console.log('Fetching cart for user:', user.id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoginPage]);
+  }, [token, user, isLoginPage, error]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity

@@ -6,6 +6,8 @@ import {
 } from '../../models/loginSchema';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '../../store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export const useLoginForm = () => {
   const [formData, setFormData] = useState<LoginRequestModel>({
@@ -13,17 +15,9 @@ export const useLoginForm = () => {
     password: '',
     expiresInMins: 30,
   });
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-    setIsNavigateLoading(true);
-    navigate('/');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  const token = useAppSelector(state => state.auth.token);
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isNavigateLoading, setIsNavigateLoading] = useState(false);
@@ -62,15 +56,23 @@ export const useLoginForm = () => {
         password: formData.password,
         expiresInMins: formData.expiresInMins,
       }).unwrap();
-
-      localStorage.setItem('token', user.token);
+      console.log('Login success:', user);
+      dispatch(setToken(user.token));
       navigate('/');
+      console.log('Login navigate');
     } catch (error) {
       console.error('Login failed:', error);
       setIsNavigateLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    setIsNavigateLoading(true);
+    navigate('/');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return {
     isNavigateLoading,
     validationError,

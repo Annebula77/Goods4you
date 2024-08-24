@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
 import { fetchCart } from '../../store/thunks/cartThunk';
 import { useGetUserQuery } from '../../store/slices/authApiSlice';
+import { setToken } from '../../store/slices/authSlice';
 
 interface HeaderProps {
   isLoginPage?: boolean;
@@ -16,27 +17,37 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const token = localStorage.getItem('token');
-
+  const token = useAppSelector(state => state.auth.token);
   const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
+  // NOTE: fix problem with token navigation
   useEffect(() => {
-    if (isLoginPage) {
-      return;
-    }
+    if (isLoginPage) return;
 
     if (!token) {
       navigate('/login');
+      console.log('Token navigates to login');
       return;
     }
 
-    if (error && 'status' in error && error.status === 401) {
-      localStorage.removeItem('token');
-      navigate('/login');
-    } else if (user) {
+    if (user) {
       dispatch(fetchCart({ userId: user.id }));
+      console.log('Fetching cart for user:', user.id);
     }
-  }, [token, user, error, isLoginPage, navigate, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, user, isLoginPage]);
+  useEffect(() => {
+    if (isLoginPage) return;
+
+    if (error && 'status' in error && error.status === 401) {
+      console.log('Unauthorized access, token may be expired or invalid');
+      dispatch(setToken(null));
+      console.log('Token is removed');
+      navigate('/login');
+      console.log('Error navigates to login');
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoginPage]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity

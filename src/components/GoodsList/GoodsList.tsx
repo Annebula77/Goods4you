@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { useAppSelector } from '../../store/hooks';
 import { useGetUserQuery } from '../../store/slices/authApiSlice';
 import Button from '../Button/Button';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
@@ -11,8 +12,11 @@ import { useGoodsList } from './useGoodsList';
 
 
 const GoodsList = () => {
-  const token = localStorage.getItem('token');
+  const token = useAppSelector(state => state.auth.token);
+
+
   const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
+
   const {
     loadedProducts,
     isLoading,

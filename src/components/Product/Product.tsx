@@ -109,6 +109,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
                 onClick={handleAddToCart}
                 type="button"
                 disabled={noStock || submittingProducts?.[product.id]}
+                aria-label="Add to cart"
               >
                 Add to cart
               </Button>

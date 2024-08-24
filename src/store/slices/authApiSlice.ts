@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  LoginRequestSchema,
   LoginResponseSchema,
   type LoginRequestModel,
   type LoginResponseModel,
@@ -11,14 +12,23 @@ export const authApiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com/' }),
   endpoints: builder => ({
     login: builder.mutation<LoginResponseModel, LoginRequestModel>({
-      query: credentials => ({
-        url: 'auth/login',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: credentials,
-      }),
+      query: credentials => {
+        const parsedCredentials = LoginRequestSchema.safeParse(credentials);
+
+        if (!parsedCredentials.success) {
+          throw new Error(
+            parsedCredentials.error.errors.map(err => err.message).join(', ')
+          );
+        }
+        return {
+          url: 'auth/login',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: parsedCredentials.data,
+        };
+      },
       transformResponse: response => {
         const parsedResponse = LoginResponseSchema.parse(response);
 

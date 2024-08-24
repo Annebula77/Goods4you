@@ -26,6 +26,7 @@ export const useGoodsList = (user: User | undefined, error: ErrorType) => {
   const { loadedProducts, skip, searchTerm, limit } = useAppSelector(
     state => state.loadedProducts
   );
+
   const cart = useAppSelector(state => state.cart.cart);
   const isAuthenticated = Boolean(user) && !error;
 

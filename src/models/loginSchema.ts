@@ -11,7 +11,7 @@ export const LoginRequestSchema = z.object({
     .string()
     .min(6, 'Password is required')
     .regex(safeStringRegex, 'Password contains invalid characters'),
-  expiresInMins: z.number().optional().default(10),
+  expiresInMins: z.number().optional().default(1),
 });
 
 export type LoginRequestModel = z.infer<typeof LoginRequestSchema>;

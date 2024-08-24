@@ -74,6 +74,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           alt={title}
           loading="lazy"
           decoding="async"
+          aria-description={title}
         />
         <div className={styles.overlay}>
           <div
@@ -106,12 +107,13 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               padding="16px 16px"
               onClick={handleCartButtonClick}
               disabled={stock === 0 || disabled}
+              aria-label="Add to cart"
             >
               <CartIcon
                 width={18}
                 height={18}
                 className={styles.icon}
-                aria-label="Add to cart"
+                aria-description="Add to cart"
               />
             </Button>
           )}

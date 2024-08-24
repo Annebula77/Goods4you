@@ -10,6 +10,7 @@ import { UserResponseSchema } from '../../models/userResponseSchema';
 export const authApiSlice = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com/' }),
+  tagTypes: ['User'],
   endpoints: builder => ({
     login: builder.mutation<LoginResponseModel, LoginRequestModel>({
       query: credentials => {
@@ -36,6 +37,7 @@ export const authApiSlice = createApi({
 
         return parsedResponse;
       },
+      invalidatesTags: ['User'],
     }),
     getUser: builder.query({
       query: () => {
@@ -56,6 +58,7 @@ export const authApiSlice = createApi({
           lastName: parsedResponse.lastName,
         };
       },
+      providesTags: ['User'],
     }),
   }),
 });

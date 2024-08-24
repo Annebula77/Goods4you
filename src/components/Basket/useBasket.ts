@@ -7,7 +7,7 @@ import { validateCartAndProduct } from '../../utils/functions/validateCartAndUse
 import {
   addRemovedProduct,
 } from '../../store/slices/cartSlice';
-import { useCartActions } from '../../utils/useCartActions';
+import { useCartActions } from '../../utils/hooks/useCartActions';
 
 
 

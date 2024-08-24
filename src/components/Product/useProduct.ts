@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { type ProductProps } from '../../types/productType';
-import { useCartActions } from '../../utils/useCartActions';
+import { useCartActions } from '../../utils/hooks/useCartActions';
 import { type CartProductModel } from '../../models/cartSchema';
 import { discountedPrice } from '../../utils/functions/discountedPrice';
 import { toast } from 'react-toastify';

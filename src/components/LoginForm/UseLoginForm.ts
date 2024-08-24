@@ -53,15 +53,14 @@ export const useLoginForm = () => {
         password: formData.password,
         expiresInMins: formData.expiresInMins,
       }).unwrap();
-      console.log('Login success:', user);
       localStorage.setItem('token', user.token);
       navigate('/');
-      console.log('Login navigate');
     } catch (error) {
       console.error('Login failed:', error);
       setIsNavigateLoading(false);
     }
   };
+
   useEffect(() => {
     if (!token) {
       return;
@@ -70,6 +69,7 @@ export const useLoginForm = () => {
     navigate('/');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return {
     isNavigateLoading,
     validationError,

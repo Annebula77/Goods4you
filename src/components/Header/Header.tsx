@@ -18,32 +18,25 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem('token');
   const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
-  // NOTE: fix problem with token navigation
+
   useEffect(() => {
     if (isLoginPage) return;
 
-    if (error && 'status' in error && error.status === 401) {
-      console.log('Unauthorized access, token may be expired or invalid');
-      localStorage.removeItem('token');
-      console.log('Token is removed');
+    if (token && error && 'status' in error && error.status === 401) {
       navigate('/login');
-      console.log('Error navigates to login');
+
+      localStorage.removeItem('token');
       return;
     }
 
     if (!token) {
       navigate('/login');
-      console.log('Token navigates to login');
       return;
     }
 
-    if (!user) {
-      return;
+    if (user) {
+      dispatch(fetchCart({ userId: user.id }));
     }
-
-    dispatch(fetchCart({ userId: user.id }));
-    console.log('Fetching cart for user:', user.id);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, user, isLoginPage, error]);
 

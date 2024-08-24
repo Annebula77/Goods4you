@@ -9,7 +9,7 @@ import {
   setSearchTerm,
   setLimit,
 } from '../../store/slices/loadedProductsSlice';
-import { useCartActions } from '../../utils/useCartActions';
+import { useCartActions } from '../../utils/hooks/useCartActions';
 import { type CartProductModel } from '../../models/cartSchema';
 import { type ProductWithCartInfo } from '../../types/productType';
 import { skipToken } from '@reduxjs/toolkit/query';

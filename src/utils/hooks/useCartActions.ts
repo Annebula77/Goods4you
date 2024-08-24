@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { updateCart } from '../store/thunks/updateCartThunk';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { updateCart } from '../../store/thunks/updateCartThunk';
 import {
   setQuantity,
   addRemovedProduct,
   setRemovedProducts,
-} from '../store/slices/cartSlice';
+} from '../../store/slices/cartSlice';
 import { toast } from 'react-toastify';
-import { CartProductModel } from '../models/cartSchema';
-import { validateCartAndProduct } from '../utils/functions/validateCartAndUser';
+import { CartProductModel } from '../../models/cartSchema';
+import { validateCartAndProduct } from '../functions/validateCartAndUser';
 import { useState } from 'react';
 
 export const useCartActions = () => {
@@ -119,16 +119,17 @@ export const useCartActions = () => {
       if (product.quantity <= 1) {
         const updatedProducts = validatedCart.products.filter(p => p.id !== id);
 
-        await dispatch(
+        const response = await dispatch(
           updateCart({
             cartId: validatedCart.id,
             products: { merge: false, products: updatedProducts },
           })
-        ).then(response => {
-          if (response.meta.requestStatus === 'fulfilled') {
-            dispatch(addRemovedProduct({ ...product, quantity: 0 }));
-          }
-        });
+        );
+
+        if (response.meta.requestStatus === 'fulfilled') {
+          dispatch(addRemovedProduct({ ...product, quantity: 0 }));
+        }
+
         return;
       }
 
@@ -147,7 +148,7 @@ export const useCartActions = () => {
     }
   };
 
-  const updateProductQuantity = async (id: number, value: number) => {
+  const updateProductQuantity = (id: number, value: number) => {
     if (value < 1) {
       return;
     }
@@ -155,7 +156,7 @@ export const useCartActions = () => {
     setProductSubmitting(id, true);
 
     try {
-      await dispatch(setQuantity({ productId: id, quantity: value }));
+      dispatch(setQuantity({ productId: id, quantity: value }));
     } finally {
       setProductSubmitting(id, false);
     }

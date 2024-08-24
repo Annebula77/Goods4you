@@ -33,16 +33,14 @@
 }
 
 
+html,
 body {
   container-type: inline-size;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
   width: 100%;
-
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 /* * {

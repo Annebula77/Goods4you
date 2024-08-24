@@ -6,6 +6,8 @@ interface ButtonProps {
   disabled?: boolean;
   padding?: string;
   type: 'button' | 'submit' | 'reset';
+  dataTestId?: string;
+  ariaLabel?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,6 +16,8 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   padding = '20px 50px',
   type,
+  dataTestId,
+  ariaLabel,
 }) => {
   return (
     <button
@@ -22,6 +26,8 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       style={{ padding }}
+      data-testid={dataTestId}
+      aria-label={ariaLabel}
     >
       <span className={styles.buttonText}>{children}</span>
     </button>

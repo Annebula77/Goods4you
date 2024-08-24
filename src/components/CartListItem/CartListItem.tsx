@@ -92,6 +92,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             onClick={onAddToCart}
             type="button"
             disabled={isSubmitting}
+            aria-label="Add to cart"
           >
             <CartIcon
               width={18}

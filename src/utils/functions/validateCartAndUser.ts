@@ -3,14 +3,12 @@ import { type CartModel } from '../../models/cartSchema';
 
 export const validateCartAndProduct = (cart: CartModel | null, id: number) => {
   if (!cart) {
-    // NOTE: Toasts to be modified
-    toast.error('Unable to update cart. Please try again.');
+    toast.error('User has no cart.');
     return null;
   }
 
   const product = cart.products.find(product => product.id === id);
   if (!product) {
-    toast.error('Product is added to cart');
     return null;
   }
 

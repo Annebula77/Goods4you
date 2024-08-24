@@ -46,15 +46,12 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     if (stock === 0) {
-      // NOTE: Change toast
-      toast.error('Out of stock');
       return;
     }
   };
 
   const handleIncrement = () => {
     if (currentQuantity >= stock) {
-      toast.info('You have reached the maximum quantity');
       return;
     }
     onIncrement(id);
@@ -64,6 +61,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
     if (stock === 0) {
       return;
     }
+    toast.success('Added to cart');
     onAddToCart(id);
   };
 
@@ -76,6 +74,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           alt={title}
           loading="lazy"
           decoding="async"
+          aria-description={title}
         />
         <div className={styles.overlay}>
           <div
@@ -99,8 +98,10 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               onIncrement={handleIncrement}
               onDecrement={() => onDecrement(id)}
               onInputChange={value => onInputChange(id, value)}
-              incrementDisabled={stock <= currentQuantity} // NOTE: toast text to parent level
+              incrementDisabled={stock <= currentQuantity}
               disabled={disabled}
+              testDecrementButton="decrement-button"
+              testIncrementButton="increment-button"
             />
           ) : (
             <Button
@@ -108,12 +109,14 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
               padding="16px 16px"
               onClick={handleCartButtonClick}
               disabled={stock === 0 || disabled}
+              aria-label="Add to cart"
+              dataTestId="add-to-cart-button"
             >
               <CartIcon
                 width={18}
                 height={18}
                 className={styles.icon}
-                aria-label="Add to cart"
+                aria-description="Cart svg"
               />
             </Button>
           )}

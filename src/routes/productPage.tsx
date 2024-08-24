@@ -1,25 +1,36 @@
 /* eslint-disable prettier/prettier */
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Product from '../components/Product/Product';
 import { type ProductType } from '../types/productType';
 import { useGetProductByIdQuery } from '../store/slices/productsApiSlice';
 import NoMatchPage from './noMatch';
 import Loader from '../components/Loader/Loader';
 import ErrorPage from './errorPage';
+import { useEffect } from 'react';
 
 export default function ProductPage() {
   const { productId } = useParams();
-
+  const token = localStorage.getItem('token');
   const numericProductId = productId ? parseInt(productId, 10) : undefined;
 
   const { data, error, isLoading } = useGetProductByIdQuery(numericProductId!);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token && error && 'status' in error && error.status === 401) {
+      navigate('/login');
+      localStorage.removeItem('token');
+      return;
+    }
+  }, [token, error, navigate]);
 
   if (!numericProductId) {
     return <ErrorPage />;
   }
 
-  if (error) {
+  if (error && 'status' in error && error.status === 404) {
     return <NoMatchPage />;
   }
 

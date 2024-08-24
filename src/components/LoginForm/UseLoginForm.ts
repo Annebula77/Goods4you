@@ -6,8 +6,6 @@ import {
 } from '../../models/loginSchema';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../store/slices/authSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export const useLoginForm = () => {
   const [formData, setFormData] = useState<LoginRequestModel>({
@@ -15,9 +13,8 @@ export const useLoginForm = () => {
     password: '',
     expiresInMins: 30,
   });
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = useAppSelector(state => state.auth.token);
+  const token = localStorage.getItem('token');
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isNavigateLoading, setIsNavigateLoading] = useState(false);
@@ -57,7 +54,7 @@ export const useLoginForm = () => {
         expiresInMins: formData.expiresInMins,
       }).unwrap();
       console.log('Login success:', user);
-      dispatch(setToken(user.token));
+      localStorage.setItem('token', user.token);
       navigate('/');
       console.log('Login navigate');
     } catch (error) {

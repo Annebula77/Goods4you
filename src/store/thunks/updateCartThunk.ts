@@ -33,7 +33,11 @@ export const updateCart = createAsyncThunk<
       },
       body: JSON.stringify(parsedBody.data),
     });
-
+    if (response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.replace('/login');
+      return rejectWithValue('Unauthorized. Redirecting to login.');
+    }
     if (!response.ok) {
       throw new Error(`Failed to update cart: ${response.status}`);
     }

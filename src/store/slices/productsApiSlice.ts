@@ -1,4 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryApi,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { type FullProductModel } from '../../models/fullProductSchema';
 
 export interface SearchParams {
@@ -7,9 +12,12 @@ export interface SearchParams {
   skip: number;
 }
 
-export const productsApiSlice = createApi({
-  reducerPath: 'productsApi',
-  baseQuery: fetchBaseQuery({
+const customBaseQuery = async (
+  args: string | FetchArgs,
+  api: BaseQueryApi,
+  extraOptions: Record<string, unknown>
+) => {
+  const baseQuery = fetchBaseQuery({
     baseUrl: 'https://dummyjson.com',
     prepareHeaders: headers => {
       const token = localStorage.getItem('token');
@@ -19,7 +27,21 @@ export const productsApiSlice = createApi({
       headers.set('Content-Type', 'application/json');
       return headers;
     },
-  }),
+  });
+
+  const result = await baseQuery(args, api, extraOptions);
+
+  if (result.error?.status === 401) {
+    localStorage.removeItem('token');
+    window.location.replace('/login');
+  }
+
+  return result;
+};
+
+export const productsApiSlice = createApi({
+  reducerPath: 'productsApi',
+  baseQuery: customBaseQuery,
   tagTypes: ['Products'],
   endpoints: builder => ({
     getProducts: builder.query<

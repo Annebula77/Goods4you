@@ -48,12 +48,11 @@ export const useLoginForm = () => {
     }
 
     try {
-      const user = await login({
+      await login({
         username: formData.username,
         password: formData.password,
         expiresInMins: formData.expiresInMins,
       }).unwrap();
-      localStorage.setItem('token', user.token);
       navigate('/');
     } catch (error) {
       console.error('Login failed:', error);

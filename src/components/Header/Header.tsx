@@ -17,17 +17,10 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const token = localStorage.getItem('token');
-  const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
+  const { data: user } = useGetUserQuery(undefined, { skip: !token });
 
   useEffect(() => {
     if (isLoginPage) return;
-
-    if (token && error && 'status' in error && error.status === 401) {
-      navigate('/login');
-
-      localStorage.removeItem('token');
-      return;
-    }
 
     if (!token) {
       navigate('/login');
@@ -38,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
       dispatch(fetchCart({ userId: user.id }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, user, isLoginPage, error]);
+  }, [token, user, isLoginPage]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity

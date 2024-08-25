@@ -14,7 +14,6 @@ import { type CartProductModel } from '../../models/cartSchema';
 import { type ProductWithCartInfo } from '../../types/productType';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { ErrorType } from '../../types/errorType';
-import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -24,12 +23,10 @@ interface User {
 
 export const useGoodsList = (user: User | undefined, error: ErrorType) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { loadedProducts, skip, searchTerm, limit } = useAppSelector(
     state => state.loadedProducts
   );
 
-  const token = localStorage.getItem('token');
   const cart = useAppSelector(state => state.cart.cart);
   const isAuthenticated = Boolean(user) && !error;
 
@@ -37,7 +34,7 @@ export const useGoodsList = (user: User | undefined, error: ErrorType) => {
     ? { q: searchTerm, limit, skip }
     : skipToken;
 
-  const { data, error: listError, isLoading } = useGetProductsQuery(queryArgs);
+  const { data, isLoading } = useGetProductsQuery(queryArgs);
 
   useEffect(() => {
     if (!isAuthenticated || !data) {
@@ -138,17 +135,6 @@ export const useGoodsList = (user: User | undefined, error: ErrorType) => {
     updateProductQuantity(id, value);
   };
   const handleLoadMore = () => {
-    if (
-      token &&
-      listError &&
-      'status' in listError &&
-      listError.status === 401
-    ) {
-      navigate('/login');
-
-      localStorage.removeItem('token');
-      return;
-    }
     if (data && skip + limit < data.total) {
       dispatch(setSkip(skip + limit));
     }

@@ -58,6 +58,13 @@ export const authApiSlice = createApi({
           lastName: parsedResponse.lastName,
         };
       },
+      transformErrorResponse: response => {
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          window.location.replace('/login');
+        }
+        return response;
+      },
       providesTags: ['User'],
     }),
   }),

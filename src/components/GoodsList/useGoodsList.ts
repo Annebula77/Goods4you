@@ -14,6 +14,7 @@ import { type CartProductModel } from '../../models/cartSchema';
 import { type ProductWithCartInfo } from '../../types/productType';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { ErrorType } from '../../types/errorType';
+import { fetchCart } from '../../store/thunks/cartThunk';
 
 interface User {
   id: number;
@@ -23,18 +24,31 @@ interface User {
 
 export const useGoodsList = (user: User | undefined, error: ErrorType) => {
   const dispatch = useAppDispatch();
+
   const { loadedProducts, skip, searchTerm, limit } = useAppSelector(
     state => state.loadedProducts
   );
-
   const cart = useAppSelector(state => state.cart.cart);
+
+  useEffect(() => {
+    if (!user) return;
+
+    dispatch(fetchCart({ userId: user.id }));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   const isAuthenticated = Boolean(user) && !error;
 
   const queryArgs = isAuthenticated
     ? { q: searchTerm, limit, skip }
     : skipToken;
 
-  const { data, isLoading } = useGetProductsQuery(queryArgs);
+  const {
+    data,
+    isLoading,
+    error: productError,
+  } = useGetProductsQuery(queryArgs);
 
   useEffect(() => {
     if (!isAuthenticated || !data) {
@@ -152,6 +166,7 @@ export const useGoodsList = (user: User | undefined, error: ErrorType) => {
     handleInputChange,
     handleLoadMore,
     submittingProducts,
+    productError,
     totalProducts: data?.total ?? 0,
   };
 };

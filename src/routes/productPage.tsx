@@ -32,7 +32,7 @@ export default function ProductPage() {
     ? {
       id: data.id,
       title: data.title,
-      category: data.category,
+      tags: data.tags,
       thumbnail: data.thumbnail,
       images: data.images,
       price: data.price,
@@ -49,7 +49,7 @@ export default function ProductPage() {
   return (
     <>
       <Helmet>
-        <title>{data?.title} | Goods4you</title>
+        <title>{data?.title || 'No such product'} | Goods4you</title>
         <meta
           name="description"
           content="Any products from famous brands with worldwide delivery"
@@ -59,7 +59,7 @@ export default function ProductPage() {
       {productData ? (
         <Product product={productData} />
       ) : (
-        <div>No product data available</div>
+        <ErrorPage />
       )}
     </>
   );

@@ -1,13 +1,15 @@
 import styles from './searchInput.module.css';
 interface SearchInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
-const SearchInput: React.FC<SearchInputProps> = ({ onChange }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onChange, value }) => {
   return (
     <>
       <input
         className={styles.search}
         type="text"
+        value={value}
         id="search"
         name="searchInput"
         placeholder="Search by title"

@@ -4,7 +4,7 @@ export type ProductType = Pick<
   FullProductModel,
   | 'id'
   | 'title'
-  | 'category'
+  | 'tags'
   | 'thumbnail'
   | 'images'
   | 'price'

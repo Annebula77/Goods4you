@@ -62,7 +62,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             aria-label="rating and categories"
           >
             <Rating rating={product.rating} />
-            <p className={styles.categories}>{product.category}</p>
+            <p className={styles.categories}>{product.tags.join(', ')}</p>
           </div>
           <div className={styles.stockContainer}>{stockMessage()}</div>
           <p className={styles.description}>{product.description}</p>

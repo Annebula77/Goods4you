@@ -15,8 +15,8 @@ const DimensionsSchema = z.object({
 });
 
 const MetaSchema = z.object({
-  createdAt: z.string().transform(str => new Date(str)), // Преобразуем строку в дату
-  updatedAt: z.string().transform(str => new Date(str)), // Преобразуем строку в дату
+  createdAt: z.string().transform(str => new Date(str)),
+  updatedAt: z.string().transform(str => new Date(str)),
   barcode: z.string(),
   qrCode: z.string().url(),
 });

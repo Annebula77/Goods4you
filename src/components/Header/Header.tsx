@@ -4,9 +4,8 @@ import styles from './header.module.css';
 import CartIcon from '../icons/CartIcon';
 import Counter from '../Counter/Counter';
 import NavigationLink from '../NavigationLink/NavigationLink';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
-import { fetchCart } from '../../store/thunks/cartThunk';
 import { useGetUserQuery } from '../../store/slices/authApiSlice';
 
 interface HeaderProps {
@@ -15,7 +14,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const token = localStorage.getItem('token');
   const { data: user } = useGetUserQuery(undefined, { skip: !token });
 
@@ -26,12 +24,8 @@ const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
       navigate('/login');
       return;
     }
-
-    if (user) {
-      dispatch(fetchCart({ userId: user.id }));
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, user, isLoginPage]);
+  }, [token, isLoginPage]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity

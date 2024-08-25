@@ -27,32 +27,39 @@ const GoodsList = () => {
     handleInputChange,
     handleLoadMore,
     totalProducts,
-    submittingProducts
+    submittingProducts,
+    productError
   } = useGoodsList(user, error);
+
+  const errors = error || productError;
+  const noProducts = searchTerm && loadedProducts.length === 0 && !errors;
 
   return (
     <section id="catalog" className={styles.goodsContainer}>
       <h2 className={styles.title}>Catalog</h2>
-      <SearchInput onChange={e => debouncedSearch(e.target.value)} />
+      <SearchInput onChange={e => debouncedSearch(e.target.value)} value={searchTerm} />
       {isLoading && <Loader />}
-      {error && <ErrorComponent />}
-      {searchTerm && loadedProducts.length === 0 && <InvalidEntry />}
-      {loadedProducts.length > 0 && (
-        <ProductsGallery
-          products={loadedProducts}
-          onAddToCart={handleAddToCart}
-          onIncrement={handleIncrement}
-          onDecrement={handleDecrement}
-          onInputChange={handleInputChange}
-          submittingProducts={submittingProducts}
+      {noProducts && <InvalidEntry />}
+      {!errors ? (
+        <>
+          {loadedProducts.length > 0 && (
+            <ProductsGallery
+              products={loadedProducts}
+              onAddToCart={handleAddToCart}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+              onInputChange={handleInputChange}
+              submittingProducts={submittingProducts}
 
-        />
-      )}
-      {loadedProducts.length < totalProducts && (
-        <div className={styles.buttonContainer}>
-          <Button onClick={handleLoadMore} type='button'>Show more</Button>
-        </div>
-      )}
+            />
+          )}
+          {loadedProducts.length < totalProducts && (
+            <div className={styles.buttonContainer}>
+              <Button onClick={handleLoadMore} type='button'>Show more</Button>
+            </div>
+          )}
+        </>) : (<ErrorComponent />)}
+
     </section>
   );
 };

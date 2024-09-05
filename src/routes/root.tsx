@@ -11,6 +11,7 @@ import Loader from '../components/Loader/Loader';
 
 export default function Root() {
   const navigation = useNavigation();
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -28,20 +29,20 @@ export default function Root() {
           <Outlet />
         </Main>
         <Footer />
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          toastClassName={styles.toast}
-        />
       </>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        toastClassName={styles.toast}
+      />
     </HelmetProvider>
   );
 }

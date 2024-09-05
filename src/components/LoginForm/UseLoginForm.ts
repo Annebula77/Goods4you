@@ -6,6 +6,7 @@ import {
 } from '../../models/loginSchema';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../utils/context/useUser';
 
 export const useLoginForm = () => {
   const [formData, setFormData] = useState<LoginRequestModel>({
@@ -14,7 +15,7 @@ export const useLoginForm = () => {
     expiresInMins: 30,
   });
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const { token, setToken } = useUser();
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isNavigateLoading, setIsNavigateLoading] = useState(false);
@@ -48,11 +49,12 @@ export const useLoginForm = () => {
     }
 
     try {
-      await login({
+      const response = await login({
         username: formData.username,
         password: formData.password,
         expiresInMins: formData.expiresInMins,
       }).unwrap();
+      setToken(response.token);
       navigate('/');
     } catch (error) {
       console.error('Login failed:', error);

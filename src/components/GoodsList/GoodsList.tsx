@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useGetUserQuery } from '../../store/slices/authApiSlice';
+import { useUser } from '../../utils/context/useUser';
 import Button from '../Button/Button';
 import ErrorComponent from '../ErrorComponent/ErrorComponent';
 import InvalidEntry from '../InvalidEntry/InvalidEntry';
@@ -11,10 +11,8 @@ import { useGoodsList } from './useGoodsList';
 
 
 const GoodsList = () => {
-  const token = localStorage.getItem('token');
 
-
-  const { data: user, error } = useGetUserQuery(undefined, { skip: !token });
+  const { user, error, userIsLoading } = useUser();
 
   const {
     loadedProducts,
@@ -33,6 +31,8 @@ const GoodsList = () => {
 
   const errors = error || productError;
   const noProducts = searchTerm && loadedProducts.length === 0 && !errors;
+
+  if (userIsLoading) return <Loader />
 
   return (
     <section id="catalog" className={styles.goodsContainer}>

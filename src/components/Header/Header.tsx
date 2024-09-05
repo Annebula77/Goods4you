@@ -6,7 +6,7 @@ import Counter from '../Counter/Counter';
 import NavigationLink from '../NavigationLink/NavigationLink';
 import { useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
-import { useGetUserQuery } from '../../store/slices/authApiSlice';
+import { useUser } from '../../utils/context/useUser';
 
 interface HeaderProps {
   isLoginPage?: boolean;
@@ -14,8 +14,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
-  const { data: user } = useGetUserQuery(undefined, { skip: !token });
+  const { user, token } = useUser();
 
   useEffect(() => {
     if (isLoginPage) return;

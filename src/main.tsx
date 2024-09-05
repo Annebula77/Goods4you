@@ -13,6 +13,7 @@ import CartPage from './routes/cartPage.tsx';
 import ProductPage from './routes/productPage.tsx';
 import LoginLayout from './routes/loginLayout.tsx';
 import LoginPage from './routes/loginPage.tsx';
+import UserProvider from './utils/context/userContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </Provider>
   </StrictMode>
 );

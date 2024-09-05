@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { useGetUserQuery } from '../../store/slices/authApiSlice';
 import { type ErrorType } from '../../types/errorType';
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+import { type User } from '../../types/user';
 
 interface UserContextValue {
   user: User | undefined;

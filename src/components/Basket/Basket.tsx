@@ -2,14 +2,12 @@
 import CartListItem from '../CartListItem/CartListItem';
 import styles from './basket.module.css';
 import Loader from '../Loader/Loader';
-import ErrorComponent from '../ErrorComponent/ErrorComponent';
 import { useBasket } from './useBasket';
 
 const Basket = () => {
   const {
     cart,
     loading,
-    error,
     hoveredItem,
     setHoveredItem,
     handleAddToCart,
@@ -26,9 +24,6 @@ const Basket = () => {
     return <Loader />;
   }
 
-  if (error) {
-    return <ErrorComponent />;
-  }
 
   return (
     <section className={styles.basketContainer}>

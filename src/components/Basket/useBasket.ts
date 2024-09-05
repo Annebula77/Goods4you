@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { updateCart } from '../../store/thunks/updateCartThunk';
 import { type CartProductModel } from '../../models/cartSchema';
@@ -8,6 +8,8 @@ import {
   addRemovedProduct,
 } from '../../store/slices/cartSlice';
 import { useCartActions } from '../../utils/hooks/useCartActions';
+import { fetchCart } from '../../store/thunks/cartThunk';
+import { useUser } from '../../utils/context/useUser';
 
 
 
@@ -22,11 +24,13 @@ export const useBasket = () => {
     submittingProducts,
   } = useCartActions();
 
-  const { cart, removedProducts, loading, error } = useAppSelector(
+  const { cart, removedProducts, loading } = useAppSelector(
     state => state.cart
   );
 
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+
+  const { user } = useUser();
 
   const handleAddToCart = (product: CartProductModel) => {
     addProductToCart(product);
@@ -74,11 +78,18 @@ export const useBasket = () => {
   const showProductList =
     (cart && cart.products.length > 0) || removedProducts.length > 0;
 
+  useEffect(() => {
+    if (!user) return;
+    if (!cart?.products.length && !removedProducts.length) {
+      dispatch(fetchCart({ userId: user.id }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart?.products.length, removedProducts.length, user]);
+
   return {
     cart,
     removedProducts,
     loading,
-    error,
     hoveredItem,
     setHoveredItem,
     handleAddToCart,

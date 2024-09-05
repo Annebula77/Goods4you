@@ -37,7 +37,7 @@ const GoodsList = () => {
   return (
     <section id="catalog" className={styles.goodsContainer}>
       <h2 className={styles.title}>Catalog</h2>
-      <SearchInput onChange={e => debouncedSearch(e.target.value)} value={searchTerm} />
+      <SearchInput onChange={e => debouncedSearch(e.target.value)} defaultValue={searchTerm} />
       {isLoading && <Loader />}
       {noProducts && <InvalidEntry />}
       {!errors ? (

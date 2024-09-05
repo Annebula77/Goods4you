@@ -15,12 +15,7 @@ import { type ProductWithCartInfo } from '../../types/productType';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { ErrorType } from '../../types/errorType';
 import { fetchCart } from '../../store/thunks/cartThunk';
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+import { type User } from '../../types/user';
 
 export const useGoodsList = (user: User | undefined, error: ErrorType) => {
   const dispatch = useAppDispatch();

@@ -91,6 +91,26 @@ npm run preview
 - **Storybook**: A tool for developing UI components in isolation for React.
 - **React Toastify**: Used for notifications.
 - **Zod**: A TypeScript-first schema declaration and validation library.
+- **Vitest**: A fast unit test framework.
+- **Testing Library (React & Jest DOM)**: Utilities for testing React components.
+
+## Testing
+
+This project is set up for unit and integration testing using the following libraries:
+
+- **Vitest (^2.0.5)**: A fast, lightweight test runner.
+- **@testing-library/react (^16.0.0)**: Provides utilities to test React components in a user-centric way.
+- **@testing-library/jest-dom (^6.5.0)**: Custom jest matchers to test the state of the DOM.
+
+## Installation Tips
+
+If you encounter any issues installing dependencies due to conflicts with peer dependencies, you can use the following command to install them while ignoring peer dependency conflicts:
+
+```bash
+npm install --save-dev --legacy-peer-deps
+```
+
+This command will allow you to bypass the peer dependency conflicts that might arise during the installation process.
 
 ## Author
 

@@ -63,9 +63,6 @@
   text-decoration-line: underline;
 }
 
-.disabled {
-  color: var(--text-grey-light);
-}
 
 .price {
   margin: -5px 0 0;
@@ -76,6 +73,11 @@
   font-weight: 400;
   line-height: 1.44;
 }
+
+.disabled {
+  color: var(--text-grey-light);
+}
+
 
 .actions {
   margin: 0;

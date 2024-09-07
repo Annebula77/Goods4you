@@ -1,4 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryApi,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { type FullProductModel } from '../../models/fullProductSchema';
 
 export interface SearchParams {
@@ -7,9 +12,36 @@ export interface SearchParams {
   skip: number;
 }
 
+const customBaseQuery = async (
+  args: string | FetchArgs,
+  api: BaseQueryApi,
+  extraOptions: Record<string, unknown>
+) => {
+  const baseQuery = fetchBaseQuery({
+    baseUrl: 'https://dummyjson.com',
+    prepareHeaders: headers => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      headers.set('Content-Type', 'application/json');
+      return headers;
+    },
+  });
+
+  const result = await baseQuery(args, api, extraOptions);
+
+  if (result.error?.status === 401) {
+    localStorage.removeItem('token');
+    window.location.replace('/login');
+  }
+
+  return result;
+};
+
 export const productsApiSlice = createApi({
   reducerPath: 'productsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com' }),
+  baseQuery: customBaseQuery,
   tagTypes: ['Products'],
   endpoints: builder => ({
     getProducts: builder.query<
@@ -17,13 +49,13 @@ export const productsApiSlice = createApi({
       SearchParams
     >({
       query: ({ q, limit, skip }) => ({
-        url: `/products/search`,
+        url: `auth/products/search`,
         params: { q, limit, skip },
       }),
       providesTags: ['Products'],
     }),
     getProductById: builder.query<FullProductModel, number>({
-      query: id => `/products/${id}`,
+      query: id => `auth/products/${id}`,
       providesTags: (result, error, id) => {
         if (error) {
           return [];

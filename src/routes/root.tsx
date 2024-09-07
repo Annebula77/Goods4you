@@ -1,13 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
 import styles from './root.module.css';
+import Loader from '../components/Loader/Loader';
 
 export default function Root() {
+  const navigation = useNavigation();
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -18,12 +22,16 @@ export default function Root() {
         />
         <meta name="robots" content="noindex" />
       </Helmet>
-      <Header />
-      <Main>
-        <Outlet />
-      </Main>
+      <>
+        {navigation.state === 'loading' && <Loader />}
+        <Header />
+        <Main>
+          <Outlet />
+        </Main>
+        <Footer />
+      </>
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -35,7 +43,6 @@ export default function Root() {
         theme="colored"
         toastClassName={styles.toast}
       />
-      <Footer />
     </HelmetProvider>
   );
 }

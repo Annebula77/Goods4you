@@ -1,20 +1,30 @@
-import { oneCartUsers } from '../../utils/mocks/profileMock';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import styles from './header.module.css';
 import CartIcon from '../icons/CartIcon';
 import Counter from '../Counter/Counter';
 import NavigationLink from '../NavigationLink/NavigationLink';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import { useEffect } from 'react';
-import { fetchCart } from '../../store/thunks/cartThunk';
+import { useUser } from '../../utils/context/useUser';
 
-const Header = () => {
-  const dispatch = useAppDispatch();
+interface HeaderProps {
+  isLoginPage?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isLoginPage }) => {
+  const navigate = useNavigate();
+  const { user, token } = useUser();
 
   useEffect(() => {
-    // NOTE: In the mock file are listed different users, sorted by cart quantity. Use them for testing purposes (oneCartUsers[1].id is as on Figma)
-    dispatch(fetchCart({ userId: oneCartUsers[1].id }));
-  }, [dispatch]);
+    if (isLoginPage) return;
+
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, isLoginPage]);
 
   const cartTotalItems = useAppSelector(
     state => state.cart.cart?.totalQuantity
@@ -24,15 +34,22 @@ const Header = () => {
     <header className={styles.headerContainer}>
       <Logo aria-label="Header Logo" />
       <nav className={styles.linkContainer} aria-label="Main Navigation">
-        <NavigationLink to="#catalog" label="Catalog" />
-        <NavigationLink to="#faq" label="FAQ" />
-        <NavigationLink to="/cart" label="Cart">
-          <div className={styles.cartWrapper}>
-            <CartIcon aria-label="Cart Button" />
-            {cartTotalItems ? <Counter quantity={cartTotalItems} /> : null}
-          </div>
-        </NavigationLink>
-        <NavigationLink to="/profile" label={oneCartUsers[1].name} />
+        {!isLoginPage && (
+          <>
+            <NavigationLink to="#catalog" label="Catalog" />
+            <NavigationLink to="#faq" label="FAQ" />
+            <NavigationLink to="/cart" label="Cart">
+              <div className={styles.cartWrapper}>
+                <CartIcon aria-label="Cart Button" />
+                {cartTotalItems ? <Counter quantity={cartTotalItems} /> : null}
+              </div>
+            </NavigationLink>
+            <NavigationLink
+              to="/profile"
+              label={user ? `${user.firstName} ${user.lastName}` : 'Profile'}
+            />
+          </>
+        )}
       </nav>
     </header>
   );

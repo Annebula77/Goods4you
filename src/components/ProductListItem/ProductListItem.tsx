@@ -19,6 +19,7 @@ interface ProductListItemProps {
   onIncrement: (id: number) => void;
   onDecrement: (id: number) => void;
   onInputChange: (id: number, value: number) => void;
+  disabled?: boolean;
 }
 const ProductListItem: React.FC<ProductListItemProps> = ({
   id,
@@ -33,6 +34,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
   onIncrement,
   onDecrement,
   onInputChange,
+  disabled,
 }) => {
   const navigate = useNavigate();
   const priceWithDiscount = discountedPrice(price, discountPercentage ?? 0);
@@ -43,14 +45,24 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
 
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation();
+    if (stock === 0) {
+      return;
+    }
   };
 
   const handleIncrement = () => {
     if (currentQuantity >= stock) {
-      toast.info('You have reached the maximum quantity');
       return;
     }
     onIncrement(id);
+  };
+
+  const handleCartButtonClick = () => {
+    if (stock === 0) {
+      return;
+    }
+    toast.success('Added to cart');
+    onAddToCart(id);
   };
 
   return (
@@ -62,6 +74,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           alt={title}
           loading="lazy"
           decoding="async"
+          aria-description={title}
         />
         <div className={styles.overlay}>
           <div
@@ -79,20 +92,31 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
           <p className={styles.price}>${priceWithDiscount}</p>
         </div>
         <div className={styles.buttonWrapper} onClick={handleButtonClick}>
-          {isAddedToCart ? (
+          {isAddedToCart && stock > 0 ? (
             <QuantityButton
               quantity={currentQuantity}
               onIncrement={handleIncrement}
               onDecrement={() => onDecrement(id)}
               onInputChange={value => onInputChange(id, value)}
+              incrementDisabled={stock <= currentQuantity}
+              disabled={disabled}
+              testDecrementButton="decrement-button"
+              testIncrementButton="increment-button"
             />
           ) : (
-            <Button padding="16px 16px" onClick={() => onAddToCart(id)}>
+            <Button
+              type="button"
+              padding="16px 16px"
+              onClick={handleCartButtonClick}
+              disabled={stock === 0 || disabled}
+              aria-label="Add to cart"
+              dataTestId="add-to-cart-button"
+            >
               <CartIcon
                 width={18}
                 height={18}
                 className={styles.icon}
-                aria-label="Add to cart"
+                aria-description="Cart svg"
               />
             </Button>
           )}

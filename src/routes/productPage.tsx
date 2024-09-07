@@ -8,6 +8,7 @@ import NoMatchPage from './noMatch';
 import Loader from '../components/Loader/Loader';
 import ErrorPage from './errorPage';
 
+
 export default function ProductPage() {
   const { productId } = useParams();
 
@@ -19,7 +20,7 @@ export default function ProductPage() {
     return <ErrorPage />;
   }
 
-  if (error) {
+  if (error && 'status' in error && error.status === 404) {
     return <NoMatchPage />;
   }
 
@@ -31,7 +32,7 @@ export default function ProductPage() {
     ? {
       id: data.id,
       title: data.title,
-      category: data.category,
+      tags: data.tags,
       thumbnail: data.thumbnail,
       images: data.images,
       price: data.price,
@@ -48,7 +49,7 @@ export default function ProductPage() {
   return (
     <>
       <Helmet>
-        <title>{data?.title} | Goods4you</title>
+        <title>{data?.title || 'No such product'} | Goods4you</title>
         <meta
           name="description"
           content="Any products from famous brands with worldwide delivery"
@@ -58,7 +59,7 @@ export default function ProductPage() {
       {productData ? (
         <Product product={productData} />
       ) : (
-        <div>No product data available</div>
+        <ErrorPage />
       )}
     </>
   );

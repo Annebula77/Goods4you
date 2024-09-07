@@ -11,6 +11,9 @@ import './index.css';
 import CatalogPage from './routes/catalogPage.tsx';
 import CartPage from './routes/cartPage.tsx';
 import ProductPage from './routes/productPage.tsx';
+import LoginLayout from './routes/loginLayout.tsx';
+import LoginPage from './routes/loginPage.tsx';
+import UserProvider from './utils/context/userContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,12 +39,24 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/login',
+    element: <LoginLayout />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </Provider>
   </StrictMode>
 );

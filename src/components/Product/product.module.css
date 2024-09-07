@@ -24,6 +24,7 @@
   max-width: 520px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -33,6 +34,7 @@
   padding: 0;
   width: 520px;
   height: 520px;
+  object-fit: contain;
   border-radius: var(--border-radius);
 }
 
@@ -105,6 +107,7 @@
 
 .priceContainer {
   box-sizing: border-box;
+  width: 68%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -273,4 +276,12 @@
     flex-direction: column;
     gap: 40px;
   }
+}
+
+@container (min-width: 1500px) {
+  .productContainer {
+    padding: 48px 340px 60px;
+
+  }
+
 }

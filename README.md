@@ -61,6 +61,7 @@ npm run preview
 - **`npm run build`**: Builds the project for production, running TypeScript checks and bundling files using Vite.
 - **`npm run lint`**: Runs ESLint to analyze the code for potential issues.
 - **`npm run preview`**: Previews the production build locally.
+- **`npm run storybook`**: Runs Storybook.
 
 ## Dependencies
 
@@ -85,6 +86,11 @@ npm run preview
 - **typescript**: TypeScript compiler.
 - **typescript-eslint**: TypeScript integration for ESLint.
 - **vite**: Next generation frontend tooling.
+- **Lodash**: Added as a utility library.
+- **React Redux, Redux Toolkit, and Redux Toolkit Query**: These libraries are included as essential for state management.
+- **Storybook**: A tool for developing UI components in isolation for React.
+- **React Toastify**: Used for notifications.
+- **Zod**: A TypeScript-first schema declaration and validation library.
 
 ## Author
 

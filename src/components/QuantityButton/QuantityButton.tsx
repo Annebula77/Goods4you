@@ -11,6 +11,7 @@ interface QuantityButtonProps {
   decrementDisabled?: boolean;
   incrementDisabled?: boolean;
   hovered?: boolean;
+  background?: boolean;
 }
 const QuantityButton: React.FC<QuantityButtonProps> = ({
   quantity,
@@ -20,6 +21,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
   decrementDisabled,
   incrementDisabled,
   hovered,
+  background,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
@@ -37,7 +39,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           disabled={decrementDisabled || quantity <= 0}
           padding="23.5px 16px"
         >
-          <MinusIcon className={styles.icon} />
+          <MinusIcon className={styles.icon} aria-label="decrease quantity" />
         </Button>
       </li>
       <li className={styles.inputItem}>
@@ -46,7 +48,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           value={`${quantity} ${quantity === 1 ? 'item' : 'items'}`}
           onChange={handleChange}
           aria-label="quantity"
-          className={`${styles.numberInput} ${hovered ? styles.hovered : ''}`}
+          className={`${styles.numberInput} ${hovered || background ? styles.hovered : ''}`}
           readOnly
         />
       </li>
@@ -56,7 +58,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
           disabled={incrementDisabled}
           padding="16px"
         >
-          <PlusIcon className={styles.icon} />
+          <PlusIcon className={styles.icon} aria-label="increase quantity" />
         </Button>
       </li>
     </ul>

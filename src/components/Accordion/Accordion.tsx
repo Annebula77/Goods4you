@@ -26,7 +26,12 @@ const Accordion: React.FC<AccordionProps> = ({ question, answer }) => {
           <span
             className={`${styles.iconWrapper} ${isOpen ? styles.open : ''}`}
           >
-            <PlusIcon fill="rgba(255, 255, 255, 1)" width={25} height={25} />
+            <PlusIcon
+              fill="rgba(255, 255, 255, 1)"
+              width={25}
+              height={25}
+              aria-label="Open button icon"
+            />
           </span>
         </button>
         <div className={`${styles.content} ${isOpen ? styles.open : ''}`}>

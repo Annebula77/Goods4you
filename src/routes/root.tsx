@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
+import styles from './root.module.css';
 
 export default function Root() {
   return (
@@ -19,6 +22,19 @@ export default function Root() {
       <Main>
         <Outlet />
       </Main>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        toastClassName={styles.toast}
+      />
       <Footer />
     </HelmetProvider>
   );

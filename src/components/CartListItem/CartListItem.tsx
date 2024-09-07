@@ -1,19 +1,23 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './cartListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useEffect, useState } from 'react';
 import DeleteButton from '../DeleteButton/DeleteButton';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
 
 interface CartListItemProps {
   id: number;
   imageUrl: string;
   name: string;
   price: number;
+  discountPercentage?: number;
   quantity: number;
-  onAddToCart?: (id: number, quantity: number) => void;
-  onRemoveFromCart?: (id: number) => void;
+  onAddToCart?: () => void;
+  onRemoveFromCart?: () => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  onInputChange: (value: number) => void;
   hovered?: boolean;
 }
 const CartListItem: React.FC<CartListItemProps> = ({
@@ -21,57 +25,32 @@ const CartListItem: React.FC<CartListItemProps> = ({
   imageUrl,
   name,
   price,
+  discountPercentage,
   quantity,
   onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
   onRemoveFromCart,
   hovered,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(quantity);
-  const [isAddedToCart, setIsAddedToCart] = useState(true);
-  const [isDeletedFromCart, setIsDeletedFromCart] = useState(false);
+  const navigate = useNavigate();
+  const priceWithDiscount = discountPercentage
+    ? discountedPrice(price ?? 0, discountPercentage ?? 0)
+    : price;
 
-  const handleIncrement = () => {
-    setCurrentQuantity(prevQuantity => prevQuantity + 1);
+  const showAddToCartButton = quantity === 0;
+
+  const handleItemClick = () => {
+    navigate(`/product/${id}`);
   };
 
-  const handleDecrement = () => {
-    setCurrentQuantity(prevQuantity =>
-      prevQuantity > 1 ? prevQuantity - 1 : 1
-    );
+  const handleButtonClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
   };
-
-  const handleInputChange = (value: number) => {
-    if (value > 0) {
-      setCurrentQuantity(value);
-    }
-  };
-
-  const handleAddToCart = () => {
-    setIsAddedToCart(true);
-    setIsDeletedFromCart(false);
-    setCurrentQuantity(1);
-    if (onAddToCart) {
-      onAddToCart(id, 1);
-    }
-  };
-
-  const handleDeleteFromCart = () => {
-    setIsDeletedFromCart(!isDeletedFromCart);
-    setIsAddedToCart(false);
-    if (isDeletedFromCart && onRemoveFromCart) {
-      onRemoveFromCart(id);
-    }
-  };
-
-  // NOTE: For testing purposes (delete later)
-  useEffect(() => {
-    if (id === 4) {
-      setIsDeletedFromCart(true);
-    }
-  }, [id]);
 
   return (
-    <article className={styles.listItem}>
+    <article className={styles.listItem} onClick={handleItemClick}>
       <figure className={styles.imageWrapper}>
         <img
           className={styles.image}
@@ -81,31 +60,27 @@ const CartListItem: React.FC<CartListItemProps> = ({
           decoding="async"
         />
         <figcaption className={styles.description}>
-          <Link
-            to={`/product/${id}`}
-            className={styles.link}
-            aria-label={`Product ${name}`}
-          >
+          <div className={styles.titleWrapper}>
             <h3
-              className={`${styles.title} ${isDeletedFromCart ? styles.disabled : ''}`}
+              className={`${styles.title} ${quantity === 0 ? styles.disabled : ''}`}
             >
               {name}
             </h3>
-            <p className={styles.price}>${price}</p>
-          </Link>
+            <p className={styles.price}>${priceWithDiscount}</p>
+          </div>
         </figcaption>
       </figure>
-      <div className={styles.actions}>
-        {isAddedToCart && !isDeletedFromCart ? (
+      <div className={styles.actions} onClick={handleButtonClick}>
+        {quantity >= 1 ? (
           <QuantityButton
-            quantity={currentQuantity}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onInputChange={handleInputChange}
+            quantity={quantity}
+            onIncrement={onIncrement}
+            onDecrement={onDecrement}
+            onInputChange={onInputChange}
             hovered={hovered}
           />
         ) : (
-          <Button padding="16px 16px" onClick={handleAddToCart}>
+          <Button padding="16px 16px" onClick={onAddToCart}>
             <CartIcon
               width={18}
               height={18}
@@ -114,7 +89,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             />
           </Button>
         )}
-        {!isDeletedFromCart && <DeleteButton onClick={handleDeleteFromCart} />}
+        {!showAddToCartButton && <DeleteButton onClick={onRemoveFromCart} />}
       </div>
     </article>
   );

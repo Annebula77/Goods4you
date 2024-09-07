@@ -1,18 +1,38 @@
 import styles from './productsGallery.module.css';
 import ProductListItem from '../ProductListItem/ProductListItem';
-import productListMock from '../../utils/mocks/productListMock';
+import { type ProductWithCartInfo } from '../../types/productType';
 
-const ProductsGallery = () => {
+interface ProductsGalleryProps {
+  products: ProductWithCartInfo[] | undefined;
+  onAddToCart: (id: number) => void;
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onInputChange: (id: number, value: number) => void;
+}
+const ProductsGallery: React.FC<ProductsGalleryProps> = ({
+  products,
+  onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
+}) => {
   return (
     <ul className={styles.list}>
-      {productListMock.map(product => (
+      {products?.map(product => (
         <li key={product.id}>
           <ProductListItem
             id={product.id}
-            imageUrl={product.image}
-            name={product.name}
+            thumbnail={product.thumbnail}
+            title={product.title}
             price={product.price}
-            quantity={product.quantity}
+            discountPercentage={product.discountPercentage}
+            stock={product.stock}
+            currentQuantity={product.currentQuantity}
+            isAddedToCart={product.isAddedToCart}
+            onAddToCart={() => onAddToCart(product.id)}
+            onIncrement={() => onIncrement(product.id)}
+            onDecrement={() => onDecrement(product.id)}
+            onInputChange={value => onInputChange(product.id, value)}
           />
         </li>
       ))}

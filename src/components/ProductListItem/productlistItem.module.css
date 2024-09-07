@@ -7,6 +7,10 @@
   gap: 10px;
 }
 
+.listItem:hover {
+  cursor: pointer;
+}
+
 .imageWrapper {
   margin: 0;
   padding: 0;
@@ -22,19 +26,27 @@
   padding: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.link {
+.titleWrapper {
   box-sizing: border-box;
-  width: 70%;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
   text-decoration: none;
+}
+
+.buttonWrapper {
+  box-sizing: border-box;
+  width: min-content;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
 }
 
 .title {
@@ -101,7 +113,7 @@
   flex-direction: column;
 }
 
-.showDetailsLink {
+.showDetails {
   text-decoration: none;
   box-sizing: border-box;
   display: flex;

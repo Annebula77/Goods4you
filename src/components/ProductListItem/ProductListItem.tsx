@@ -1,118 +1,102 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './productListItem.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';
-import { useEffect, useState } from 'react';
+import { discountedPrice } from '../../utils/functions/discountedPrice';
+import { toast } from 'react-toastify';
 
 interface ProductListItemProps {
   id: number;
-  imageUrl: string;
-  name: string;
+  thumbnail: string;
+  title: string;
   price: number;
-  quantity: number;
-  onAddToCart?: (id: number, quantity: number) => void;
+  stock: number;
+  discountPercentage?: number;
+  currentQuantity: number;
+  isAddedToCart: boolean;
+  onAddToCart: (id: number) => void;
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onInputChange: (id: number, value: number) => void;
 }
 const ProductListItem: React.FC<ProductListItemProps> = ({
   id,
-  imageUrl,
-  name,
+  thumbnail,
+  title,
   price,
-  quantity,
+  stock,
+  discountPercentage,
+  currentQuantity,
+  isAddedToCart,
   onAddToCart,
+  onIncrement,
+  onDecrement,
+  onInputChange,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(quantity);
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const navigate = useNavigate();
+  const priceWithDiscount = discountedPrice(price, discountPercentage ?? 0);
+
+  const handleItemClick = () => {
+    navigate(`/product/${id}`);
+  };
+
+  const handleButtonClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
 
   const handleIncrement = () => {
-    setCurrentQuantity(prevQuantity => {
-      if (prevQuantity < quantity) {
-        return prevQuantity + 1;
-      }
-      return prevQuantity;
-    });
-  };
-
-  const handleDecrement = () => {
-    setCurrentQuantity(prevQuantity =>
-      prevQuantity > 1 ? prevQuantity - 1 : 0
-    );
-  };
-
-  const handleInputChange = (value: number) => {
-    if (value > 0) {
-      setCurrentQuantity(value);
+    if (currentQuantity >= stock) {
+      toast.info('You have reached the maximum quantity');
+      return;
     }
+    onIncrement(id);
   };
-
-  const handleAddToCart = () => {
-    setIsAddedToCart(true);
-    setCurrentQuantity(1);
-    if (!onAddToCart) return;
-    onAddToCart(id, 1);
-  };
-
-  // NOTE: For testing purposes (delete later)
-  useEffect(() => {
-    if (id === 6) {
-      handleAddToCart();
-    }
-    // eslint-disable-next-line
-  }, [id]);
-
-  useEffect(() => {
-    if (currentQuantity === 0) {
-      setIsAddedToCart(false);
-    }
-  }, [currentQuantity]);
 
   return (
-    <article className={styles.listItem}>
+    <article className={styles.listItem} onClick={handleItemClick}>
       <div className={styles.imageWrapper}>
         <img
           className={styles.image}
-          src={imageUrl}
-          alt={name}
+          src={thumbnail}
+          alt={title}
           loading="lazy"
           decoding="async"
         />
         <div className={styles.overlay}>
-          <Link
-            to={`/product/${id}`}
-            className={styles.showDetailsLink}
-            aria-label={`Show details for ${name}`}
+          <div
+            className={styles.showDetails}
+            aria-label={`Show details for ${title}`}
           >
             <span className={styles.showDetailsText}>Show details</span>
-          </Link>
+          </div>
         </div>
       </div>
 
       <div className={styles.actions}>
-        <Link
-          to={`/product/${id}`}
-          className={styles.link}
-          aria-label={`Product ${name}`}
-        >
-          <h3 className={styles.title}>{name}</h3>
-          <p className={styles.price}>${price}</p>
-        </Link>
-        {isAddedToCart ? (
-          <QuantityButton
-            quantity={currentQuantity}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onInputChange={handleInputChange}
-          />
-        ) : (
-          <Button padding="16px 16px" onClick={handleAddToCart}>
-            <CartIcon
-              width={18}
-              height={18}
-              className={styles.icon}
-              aria-label="Add to cart"
+        <div className={styles.titleWrapper} aria-label={`Product ${title}`}>
+          <h3 className={styles.title}>{title}</h3>
+          <p className={styles.price}>${priceWithDiscount}</p>
+        </div>
+        <div className={styles.buttonWrapper} onClick={handleButtonClick}>
+          {isAddedToCart ? (
+            <QuantityButton
+              quantity={currentQuantity}
+              onIncrement={handleIncrement}
+              onDecrement={() => onDecrement(id)}
+              onInputChange={value => onInputChange(id, value)}
             />
-          </Button>
-        )}
+          ) : (
+            <Button padding="16px 16px" onClick={() => onAddToCart(id)}>
+              <CartIcon
+                width={18}
+                height={18}
+                className={styles.icon}
+                aria-label="Add to cart"
+              />
+            </Button>
+          )}
+        </div>
       </div>
     </article>
   );

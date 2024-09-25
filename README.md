@@ -1,6 +1,6 @@
 # Goods4You
 
-Welcome to the Goods4You project! This project is built using React, TypeScript, and Vite. It includes a set of configurations and dependencies to help you build and preview the application efficiently. Goods4You is a demo e-commerce store project based on tasks from T1. It showcases how I use modern web technologies and provides a clear example of my coding style and practices..
+Welcome to the Goods4You project! This project is built using React, TypeScript, and Vite. It is a demo e-commerce store project based on tasks from T1. It showcases how I use modern web technologies and provides a clear example of my coding style and practices..
 
 ## Table of Contents
 

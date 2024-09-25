@@ -1,4 +1,4 @@
-# T1 Tasks
+# Goods4You
 
 Welcome to the **Goods4You** project! This project is built using React, TypeScript, and Vite. It includes a set of configurations and dependencies to help you to build, and preview this application efficiently.
 

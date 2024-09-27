@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styles from './NoMatchComponent.module.css';
+import styles from './noMatchComponent.module.css';
 
 const NoMatchComponent = () => {
   return (

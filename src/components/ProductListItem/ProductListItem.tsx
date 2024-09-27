@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './productListItem.module.css';
+import styles from './productListPosition.module.css';
 import Button from '../Button/Button';
 import CartIcon from '../icons/CartIcon';
 import QuantityButton from '../QuantityButton/QuantityButton';

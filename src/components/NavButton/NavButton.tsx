@@ -1,4 +1,4 @@
-import styles from './NavButton.module.css';
+import styles from './navButton.module.css';
 
 interface NavButtonProps {
   children: React.ReactNode;

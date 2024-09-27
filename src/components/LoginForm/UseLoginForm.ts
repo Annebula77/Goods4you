@@ -54,7 +54,7 @@ export const useLoginForm = () => {
         password: formData.password,
         expiresInMins: formData.expiresInMins,
       }).unwrap();
-      setToken(response.token);
+      setToken(response.accessToken);
       navigate('/');
     } catch (error) {
       console.error('Login failed:', error);

@@ -24,7 +24,7 @@ export const LoginResponseSchema = z.object({
   lastName: z.string(),
   gender: z.enum(['male', 'female']),
   image: z.string().url(),
-  token: z.string(),
+  accessToken: z.string(),
   refreshToken: z.string(),
 });
 

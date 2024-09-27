@@ -33,7 +33,7 @@ export const authApiSlice = createApi({
       transformResponse: response => {
         const parsedResponse = LoginResponseSchema.parse(response);
 
-        localStorage.setItem('token', parsedResponse.token);
+        localStorage.setItem('token', parsedResponse.accessToken);
 
         return parsedResponse;
       },
